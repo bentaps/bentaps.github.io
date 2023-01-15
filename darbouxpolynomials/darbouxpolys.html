@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MathJax example</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<p style="font-family: Arial;
+font-size: 20 px;">
+    We will first outline the
+    relevant background information. If you want to skip over this, you
+    can
+    start from the "Results" section.
+</p>
+<p style="font-family: Arial">
+    <b>Differential equations: </b>Say we have a 2-dimensional set of
+    ordinary differential equations for the dependent variables $x(t)$
+    and
+    $y(t)$ $$\dot{x}=f(x, y),\quad \dot{y}= g(x, y),$$ where the dot
+    denotes
+    a time derivative $\frac{\mathrm{d}}{\mathrm{d} t}$ and $x=x(t)$ and
+    $y=y(t)$ are functions of $t$ but we just write $x$ and $y$ for
+    brevity.
+</p>
+
+<p style="font-family: Arial">
+    <b>Darboux polynomials: </b> This differential equation possesses
+    something called a <em>Darboux polynomial</em> $p(x,y)$ if there
+    exists
+    a function $a(x,y)$ called the <em>cofactor</em> satisfying the
+    following
+    eigenfunction equation $$\dot{p}(x,y) = a(x,y)p(x,y).$$ Note here
+    the
+    time derivative is actually a <em> directional derivative</em>
+    along the flow of the differential equation's vector field
+    $\mathbf{f}=(f(x,y),g(x,y))^T$. That is, $$\dot{p}(x,y) =
+    f(x,y)\frac{\partial p(x,y)}{\partial x} + g(x,y)\frac{\partial
+    p(x,y)}{\partial y} = (\mathbf{f}\cdot\nabla)p(x,y).$$
+    <!-- <p
+style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin-right:20px"> -->
+    Darboux Polynomials are also called <em>
+        eigenfunctions</em> as they are analogous to <em> eigenvectors
+    </em> for
+    matrices. Recall that a square matrix $A$ has an eigenvector
+    $\mathbf{v}$ if there exists a scalar eigenvalue $\lambda$
+    satisfying
+    the equation $A\mathbf{v}=\lambda\mathbf{v}$ then we recover the
+    above
+    equation by exchanging $A\rightarrow \frac{\mathrm{d}}{\mathrm{d}
+    t}$,
+    $\mathbf{v}\rightarrow p(x, y)$ and $\lambda\rightarrow a(x,y)$. In
+    other words, Darboux polynomials are left invariant under the time
+    derivative operator (which is really a directional derivative
+    operator).
+    Note that this time derivative operator is really a directional
+    derivative along the direction of the differential equation due to
+    the
+    chain rule.
+    <br>
+    <br>
+    Darboux Polynomials also go by the name <em>second integrals</em>
+    (or
+    <em>weak integrals</em>). In contrast, a <em>first integral</em> (or
+    <em>strong integral</em>), as we have seen in the section
+    "Energy-preserving methods for differential equations", is a
+    function
+    $H(x,y)$ that is left constant along the solution of the
+    differential
+    equation, that is, $\dot{H}(x, y)=0$. Darboux polynomials are
+    constant
+    along solutions of the differential equation from initial conditions
+    that satisfy $p(x_0, y_0)=0$ or $c(x_0, y_0)=0$. That is, from
+    certain
+    initial conditions they behave like first integrals. Due to this,
+    the
+    solution of a differential equation cannot cross regions where
+    $p(x,y)=0$. In other words, these regions act as barriers and
+    partition
+    the solution space into regions that are qualitatively different.
+    This
+    can be seen in the example to follow and the image above.
+    <br><br>
+    An interesting property about Darboux polynomials is that products
+    of
+    Darboux polynomials are also Darboux polynomials. That is if we have
+    two
+    Darboux polynomials $p(x,y)$ and $q(x,y)$ of a given differential
+    equation that satisfy $\dot{p}(x,y)=a(x,y)p(x,y)$ and
+    $\dot{q}(x,y)=d(x,y)q(x,y)$, then the product $p(x,y)^\alpha
+    q(x,y)^\beta$ is also a Darboux polynomial with cofactor $\alpha
+    a(x,y)+\beta d(x,y)$. That is,
+    $$\frac{\mathrm{d}}{\mathrm{d}t}\left(p(x,y)^\alpha
+    q(x,y)^\beta\right)=(\alpha a(x,y)+\beta d(x,y))p(x,y)^\alpha
+    q(x,y)^\beta.$$ So in the special case where $\alpha a(x,y)+\beta
+    d(x,y)=0$ then $p(x,y)^\alpha q(x,y)^\beta$ is actually a first
+    integral
+    (AKA invariant, strong integral, preserved quantity). Note that
+    finding
+    Darboux polynomials is a difficult task and there do not exist too
+    many
+    computationally tractable methods for doing so.
+</p>
+
+<p style="font-family: Arial">
+    <b>Example: </b>Say we are given the following set of differential
+    equations $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y
+    \left(
+    2\,x+y \right).$$ We have the following three Darboux polynomials
+    $$p(x,y) = x + y, \quad q(x,y) = x - y, \quad r(x,y) = y,$$
+    corresponding to the cofactors $$a(x,y) = x + 5y, \quad b(x,y) = x -
+    y,
+    \quad c(x,y) = 4x+2y,$$ respectively. If we plot $a(x,y)=0$, this is
+    the
+    straight line given by $y=-\frac{x}{5}$ this results in the dashed
+    blue
+    line with negative gradient as shown in the above diagram. The other
+    dashed blue lines correspond to $b(x,y)=0$ and $c(x,y)=0$. Solutions
+    to
+    this differential equation are plotted as black lines. There are
+    multiple black lines corresponding to different initial conditions.
+    We
+    notice that no solution crosses the blue lines, and all the
+    solutions
+    that start on the blue line remain on the blue lines (that is, the
+    Darboux polynomials behave like first integrals when the initial
+    conditions satisfy $a(x_0,y_0)=0$) and so forth. Lastly, we observe
+    that
+    $a(x,y)+3b(x,y)-c(x,y)=0$ meaning that $p(x,y)q(x,y)^3r(x,y)^{-1}$
+    is a
+    first integral. In other words, all the values of $x$ and $y$ that
+    lie
+    on the black lines satisfy $p(x,y)q(x,y)^3r(x,y)^{-1}=constant.$
+</p>
+<p style="font-family: Arial">
+    <b>Numerical (Runge-Kutta) methods:</b> As most differential
+    equations
+    are impossible to solve by hand we often seek to approximate them on
+    a
+    computer. One of the most popular classes of numerical methods for
+    solving differential equations are the Runge-Kutta methods. The most
+    simple example of a Runge-Kutta method is the Forward Euler method.
+    We
+    start with an arbitrary ordinary differential equation
+    $$\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x}).$$ Here we use bold font
+    to
+    denote vector-valued quantities such that our equations also apply
+    to
+    multi-dimensional cases (for the previous 2-dimensional case this
+    would
+    be $\mathbf{x}(t)=(x(t),y(t))^T$,
+    $\mathbf{f}(\mathbf{x})=(f(x,y),g(x,y))^T$ and so on). Given the
+    initial
+    conditions $\mathbf{x}(0)=\mathbf{x}_0$ and a small time-step
+    $\Delta t$
+    then the Forward Euler approximation the exact solution at time
+    $t=\Delta t$ is denoted by $\mathbf{x}_{\Delta
+    t}\approx\mathbf{x}({\Delta t})$ and is given by the formula
+    $$\mathbf{x}_{\Delta t} = \mathbf{x}_0 + \Delta
+    t\mathbf{f}(\mathbf{x}_0).$$ In the following, we will let
+    $\mathbf{x}_{\Delta t}$ denote any approximation to the exact
+    solution
+    $\mathbf{x}(\Delta t)$ by any Runge-Kutta method. But we can keep
+    the
+    aforementioned, simple example of the Forward Euler method in our
+    minds.
+</p>
+<p style="font-family: Arial">
+    <b><em>Discrete</em> Darboux polynomials</b> The theory of discrete
+    Darboux polynomials was only recently developed. The idea is to take
+    the
+    eigenfunction equation and discretise the time derivative like so
+    $$\frac{\mathrm{d}p(\mathbf{x})}{\mathrm{d}t} = c(\mathbf{x})
+    p(\mathbf{x}) \underset{\mathrm{(discretise)}}{\longrightarrow}
+    \frac{p(\mathbf{x}_{\Delta t}) - p(\mathbf{x}_0)}{\Delta
+    t}\approx c(\mathbf{x}_0)p(\mathbf{x}_0)$$ Rearranging the equation
+    gives
+    $$p(\mathbf{x}_{\Delta t})\approx\underbrace{\left(1 + \Delta t
+    c(\mathbf{x}_0)\right)}_{\approx{c}_{\Delta
+    t}(\mathbf{x}_0)}p(\mathbf{x}_0)$$ in
+    other words, the discrete analogue of the eigenfunction equation is
+    given by $$p(\mathbf{x}_{\Delta t})={c}_{\Delta
+    t}(\mathbf{x}_0)p(\mathbf{x}_0)$$ where we have introduced the
+    <em>discrete cofactor</em> ${c}_{\Delta t}(\mathbf{x}_0)$. Now we
+    can
+    provide a definition; a numerical method $\mathbf{x}_{\Delta t}$ is
+    said to
+    possess a discrete Darboux polynomial $p(\mathbf{x})$ if there
+    exists a
+    discrete cofactor $c_{\Delta t}(\mathbf{x}_0)$ that satisfies the
+    above
+    discrete eigenfunction equation.
+    <br><br>
+    We also have a number of discrete analogues of the continuous
+    Darboux
+    polynomial properties. For example we have that if $c_{\Delta
+    t}(\mathbf{x})=1$ then $p(\mathbf{x})$ is a first integral (i.e.,
+    $p(\mathbf{x}_{\Delta t})=p(\mathbf{x}_{0})$ is kept constant along
+    the
+    numerical solution). Furthermore, if $p(\mathbf{x})$ and
+    $q(\mathbf{x})$
+    are both discrete Darboux polynomials of the numerical method, then
+    the
+    product $p(\mathbf{x})^\alpha q(\mathbf{x})^\beta$ is a Darboux
+    polynomial with cofactor $a(\mathbf{x}_0)^\alpha
+    b(\mathbf{x}_0)^\beta$
+    (i.e., the <em>product</em> of the cofactors is a cofactor, whereas
+    in
+    the continuous case it was their sum). That is
+    $$p(\mathbf{x}_{\Delta
+    t})^\alpha q(\mathbf{x}_{\Delta t})^\beta =\left(
+    a(\mathbf{x}_0)^\alpha b(\mathbf{x}_0)^\beta\right)
+    \left(p(\mathbf{x}_0)^\alpha q(\mathbf{x}_0)^\beta\right).$$
+</p>
+<p
+    style="color: black; border:groove; border-width: 6px; font-family: Arial;">
+    <b>Results:</b> So far we know that differential equations can
+    possess
+    Darboux polynomials. We know that Darboux polynomials are important
+    to
+    understand the solution space of the equation we are solving (recall
+    from the figure that the dashed blue lines represent important
+    features
+    of the solution). We also know that a numerical method can possess
+    discrete Darboux polynomials. So an important question is: if a
+    differential equation has a Darboux polynomial $p(\mathbf{x})$, when
+    will a numerical method $\mathbf{x}_{\Delta x}$ have $p(\mathbf{x})$
+    as
+    a discrete Darboux polynomial? The answer is, that when
+    $p(\mathbf{x})$
+    is linear (i.e., a polynomial of no more than degree one) then all
+    numerical methods that are Runge-Kutta methods will share the same
+    discrete Darboux polynomials of the different equation. However,
+    this
+    cannot happen for the case where $p(\mathbf{x})$ is quadratic or
+    higher.
+    <br><br>
+    A number of interesting and general results about Runge-Kutta
+    methods
+    can be inferred from this discovery, the most striking of which is
+    the
+    following. If a differential equation possesses a rational first
+    integral of the form $H(\mathbf{x})=p(\mathbf{x})/q(\mathbf{x})$
+    that is
+    linear in the numerator and the denominator, then any Runge-Kutta
+    method
+    will also also have $H(\mathbf{x})$ as first integral.
+    <br><br>
+    The fact that we can learn something new about Runge-Kutta methods
+    shows
+    us that discrete Darboux polynomials are a worthwhile topic to study
+    further.
+</p>
