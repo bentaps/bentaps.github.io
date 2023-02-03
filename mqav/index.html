@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MathJax example</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<p style="font-family: Arial">
+    Many differential equations possess a conserved quantity such those due to
+    the conservation of energy or momentum, or an invariant manifold. Given a
+    differential equation $$\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x})$$ Let's say
+    that this differential equation has a conserved quantity $H(\mathbf{x})$,
+    then for it to be a conserved along the solution of the differential
+    equation $$\frac{\mathrm{d} H(\mathbf{x})}{\mathrm{d}
+    t}=\mathbf{f}(\mathbf{x})^T \nabla H = 0$$ due to the chain rule. We can see
+    that if we can write the differential equation as the product of a skew
+    symmetric matrix $S(\mathbf{x})=-S(\mathbf{x})^T$ and the gradient of the
+    invariant then the above equation is satisfied. That is
+    $$\mathbf{f}(\mathbf{x}) = S(\mathbf{x})\nabla H(\mathbf{x})$$ then the
+    solution of the differential equation keeps $H$ constant. 
+    <br><br> 
+    There are many existing numerical methods that solve such a differential
+    equation while preserving $H(\mathbf{x})$. That is, there exist numerical
+    approximations $\mathbf{x}_1\approx\mathbf{x}(\Delta t)$ that satisfy
+    $H(\mathbf{x}_1)=H(\mathbf{x}_0)$. <br><br>
+    What we will propose here is a new numerical method for solving differential
+    equations while preserving polynomial invariants. Let's first review some
+    common knowledge about Runge-Kutta methods. We know that if a differential
+    equation possesses multiple invariants $H(\mathbf{x})$ that are at most
+    linear, then any Runge-Kutta method will preserve these invariants. If the
+    differential equation possesses multiple invariants $H(\mathbf{x})$ that are
+    <em>quadratic</em>, then there are <em>certain</em> Runge-Kutta methods that
+    can preserve them. For example, the midpoint rule is one such numerical
+    method that preserves all such quadratic invariants. However, if we are
+    given a differential equation with a polynomial invariant (with degree
+    higher than 2) then there are very few methods that can preserve these
+    invariants. Here we will propose a new numerical method for preserving
+    polynomial invariants. <br><br>
+    The idea is very simple. Given a differential equation with a cubic or
+    higher invariant then we can rewrite this invariant as a quadratic invariant
+    using auxiliary variables 
+</p>

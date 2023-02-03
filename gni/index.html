@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MathJax example</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']]
+            },
+            svg: {
+                fontCache: 'global'
+            }
+        };
+    </script>
+    <script id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+        </script>
+</head>
+
+<p style="font-family: Arial;
+font-size: 20 px;">
+    Here is a brief overview of geometric numerical integration. We will
+    introduce this topic assuming close to no background knowledge, starting
+    with differential equations, numerical analysis then geometric numerical
+    analysis.
+</p>
+<p style="font-family: Arial">
+    <b>Differential equations: </b>Say we have a 2-dimensional set of ordinary
+    differential equations for the dependent variables $x(t)$ and $y(t)$
+    $$\dot{x}=f(x, y),\quad \dot{y}= g(x, y),$$ where the dot denotes a time
+    derivative $\frac{\mathrm{d}}{\mathrm{d} t}$ and $x=x(t)$ and $y=y(t)$ are
+    functions of $t$ but we just write $x$ and $y$ for brevity as we will do throughout. We often write
+    this in the following <em>vector notation</em>:
+    $$\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x}),$$ where
+    $\mathbf{f}(\mathbf{x})=(f(x,y),g(x,y))^T$ is called the <em>vector field</em> of the
+    differential equation and $\mathbf{x}=(x,y)^T$ is the vector of independent
+    variables. (Note we write vectors with the transpose operator $^T$ as it is
+    convention that vectors are column-vectors). The goal of solving
+    differential equations is therefore to solve for the dependent variables
+    $\mathbf{x}$ given the above differential equation and some initial data.
+    <br>
+    <br>
+    Take for example the following differential equation for a simple harmonic
+    oscillator (e.g, a vibrating mass on a frictionless spring)
+    $$\dot{x}=v,\quad\dot{v}=-x,$$ with initial conditions
+    $$ x(0)=x_0, \quad  v(0)=v_0.$$ 
+    Having initial conditions means that we know the
+    starting position and velocity at time $t=0$, that is, they are the known
+    constants $x_0$ and $v_0$. For example $x_0=0$, $v_0=-1$ means that the mass
+    starts moving to the left with velocity -1. This is usually given to us. 
+    The simple harmonic oscillator corresponds to the vector field
+    $\mathbf{f}=(v,-x)^T$ which is plotted below. (Recall that a
+    vector/vector-field is simply a way of assigning a vector to every point in
+    space as seen in the figure)
+    <img src="pendulum.png" alt="pendulum"
+        style="float:center;width:300px;height:300px;">
+    <br>
+    The solution to the differential
+    equation is a line $\mathbf{x}(t)$ which is a function of $t$, whose tangent
+    vector is $\mathbf{f}(\mathbf{x})$. By looking at the above graph you can
+    see that such a line would be a circle. As expected, the <em>exact</em>
+    solution to this differnetial equation is $$x(t) = \sin(t), \quad v(t) =
+    \cos(t)$$ which is the equation for a circle. Note that we have ignored some
+    constants to avoid cluttering the equations.
+    <br>
+    <br>
+    <b>Numerical analysis: </b> The above differential equation happens to have
+    an exact solution that we can write down. In other words, we can solve for
+    functions $x(t)$ and $y(t)$ that map an arbitrary set of initial conditions
+    to the solution at an arbitrary time in the future. Such a solution is
+    available in this particular case largely due to the equations being linear
+    and only in two dimensions. In contrast, most real-world equations are not
+    so easily solvable and can be highly non-linear and highly dimensional.
+    This means we cannot find an exact, general solution. However, just because
+    we (i.e., all humans in the world) are not smart enough to find this
+    solution, doesn't mean that one doesn't exist. As long as the solution
+    exists then using <em>numerical methods</em> we can approximate it to an
+    arbitrarily high level of accuracy.
+    <br><br>
+    Let's now solve the above simple harmonic oscillator using a numerical
+    method. The idea behind numerical methods is as follows. Using the initial
+    conditions and vector field, approximate the solution at some small time
+    step $\Delta t << 1$ in the future. The simplest
+    approximation/discretisation we can make is
+    $$\frac{\mathrm{d}\mathbf{x}(t)}{\mathrm{d}t} = \mathbf{f}(\mathbf{x}(t))
+    \quad
+    \underset{\mathrm{(discretise)}}{\longrightarrow}\quad\frac{\mathbf{x}(\Delta
+    t)-\mathbf{x}(0)}{\Delta t} \approx \mathbf{f}(\mathbf{x}(0))$$ Recall that
+    the definition of the derivative is $\frac{\mathrm{d}\mathbf{x}(t)}
+    {\mathrm{d}t} := \lim_{\Delta t\rightarrow 0}\frac{\mathbf{x}(\Delta
+    t)-\mathbf{x}(0)}{\Delta t}$, so the approximation is the same as this but
+    assuming that $\Delta t << 1$ instead of $\Delta t \rightarrow 0$. So the
+    above discretisation is interpreted as the approximate derivative is roughly
+    equal to the the vector field evaluated at $t=0$ (actually we could have
+    chosen any value $0\le t \le \Delta t$ but $t=0$ is the simplest). We can
+    now rearrange this equation to get the following $$\mathbf{x}_1 =
+    \mathbf{x}_0 + \Delta t \,\mathbf{f}(\mathbf{x}_0),$$ where we are now using
+    the notation $\mathbf{x}_n\approx \mathbf{x}(n\Delta x)$ (except for $n=0$,
+    where the $\approx$ is an $=$ as the initial conditions are by definition
+    exact). In other words, using the above discretisation we can calculate an
+    approximation $\mathbf{x}_1$ to $\mathbf{x}(\Delta t)$. Note that using
+    other discretiations we can calculate other approximations $\mathbf{x}_1$.
+    Finding better and more sophisticated discretisations is basically the whole
+    field of numerical analysis. The particular discretisation that lead to the
+    above formula for $\mathbf{x}_1$ is called the <em>Forward Euler
+    method</em>. This gives an approximation to the exact solution at time
+    $t=\Delta t << 1$. So to find a solution at some arbitrary time $t>1$ in the
+    future, we can iteratively apply this approximation until we reach the
+    desired time. For example if we want the approximation at time $t=2\Delta t$
+    then we calculate $$\mathbf{x}(2\Delta t)\approx\mathbf{x}_2 = \mathbf{x}_1
+    + \Delta t \,\mathbf{f}(\mathbf{x}_1),$$ where $\mathbf{x}_1$ is the forward
+    Euler approximation starting from $\mathbf{x}_0$ as we wrote above. 
+    <br><br>
+    <b><em>Geometric</em> numerical analysis: </b> The above forward Euler
+    method can be thought of as a purely mathematical approximation to the
+    differential equation that we are solving, bearing no relevance to the real
+    world. This is due to the fact that the forward Euler method is a general
+    purpose method. Meaning that is can be applied to pretty much any different
+    equation that we are given. This is very powerful, as we can apply this
+    method to a differential equation and we can get a reasonable approximation
+    that is numerically consistent. However, this generality comes with a down
+    side. Namely, any physical laws that govern the dynamics of the equations
+    under study could be broken. This is usually a very bad thing as most
+    equations that are worth solving arise from some sort of physical law. One
+    of the most common laws is the law of conservation of energy. In classical
+    mechanics, this is the statement that in a dynamical system, the total
+    energy remains constant in time, that is $$\frac{\mathrm{d}E}{\mathrm{d}t} =
+    0.$$ For our harmonic oscillator, this corresponds to the total energy
+    $$E(\mathbf{x}) = \frac{1}{2}v^2 + \frac{1}{2}x^2,$$ due to the fact that a
+    spring has a quadratic potential. We can see that the exact solutions
+    preserve this energy due to the fact that $\cos(t)^2+\sin(t)^2=1$ is
+    constant in time. We would also like our numerical approximation
+    $\mathbf{x}_1$ to satisfy energy conservation $$\frac{E(\mathbf{x}_1) -
+    E(\mathbf{x}_0)}{\Delta t} = 0$$ or simply
+    $E(\mathbf{x}_1)=E(\mathbf{x}_0)$. That is, we would like the energy after
+    one time step to be equal to the energy at the previous time step. 
+</p>
