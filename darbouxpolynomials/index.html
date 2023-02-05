@@ -22,31 +22,40 @@
 
 <p style="font-family: Arial;
 font-size: 20 px;">
-    We will first outline the
-    relevant background information. If you want to skip over this, you
-    can
-    start from the "Results" section.
-</p>
-<p style="font-family: Arial">
-    <b>Differential equations: </b>Say we have a 2-dimensional set of
-    ordinary differential equations for the dependent variables $x(t)$
-    and
-    $y(t)$ $$\dot{x}=f(x, y),\quad \dot{y}= g(x, y),$$ where the dot
-    denotes
-    a time derivative $\frac{\mathrm{d}}{\mathrm{d} t}$ and $x=x(t)$ and
-    $y=y(t)$ are functions of $t$ but we just write $x$ and $y$ for
-    brevity.
+    We will first introduce the concept of Darboux polynomials using an example, where we also outline the
+    relevant background information. The results of this research project are presented at the end. 
 </p>
 
 <p style="font-family: Arial">
-    <b>Darboux polynomials: </b> This differential equation possesses
-    something called a <em>Darboux polynomial</em> $p(x,y)$ if there
-    exists
-    a function $a(x,y)$ called the <em>cofactor</em> satisfying the
-    following
-    eigenfunction equation $$\dot{p}(x,y) = a(x,y)p(x,y).$$ Note here
-    the
-    time derivative is actually a <em> directional derivative</em>
+    <b>Example: </b>Say we are given the following set of differential equations
+    $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y \left( 2\,x+y
+    \right).$$ Let's examine some qualitative features of this differential
+    equation by looking at some examples of its solution. The following
+    animation plots solutions this differential equation on the starting from
+    random initial conditions (black dots).
+    <br>
+    <img src="GIFs/PhaseLines.gif" alt="phaselines"
+    style="float:center;width:300px;height:300px;">
+    <br>
+    We can clearly see here that sometimes the solution is bounded and
+    approaches a certain value. Other times the solution is unbounded and
+    approaches infinity. There are also some regions where the solution doesn't
+    cross (the horizontal axis for example). Furthermore, there are some
+    solutions that are straight lines, i.e., linear functions of time $t$. All of
+    these observations can be explained in terms of <em>Darboux polynomials</em>. 
+</p>
+
+<p style="font-family: Arial">
+    <b>Darboux polynomials: </b> 
+    Say we have a 2-dimensional set of ordinary differential equations for the
+    dependent variables $x(t)$ and $y(t)$ $$\dot{x}=f(x, y),\quad \dot{y}= g(x,
+    y),$$ where the dot denotes a time derivative $\frac{\mathrm{d}}{\mathrm{d}
+    t}$ and $x=x(t)$ and $y=y(t)$ are functions of $t$ but we just write $x$ and
+    $y$ for brevity. This differential equation can possess something called a
+    <em>Darboux polynomial</em> $p(x,y)$ if there exists a function $a(x,y)$
+    called the <em>cofactor</em> satisfying the following eigenfunction equation
+    $$\dot{p}(x,y) = a(x,y)p(x,y).$$ Note here the time derivative is actually a
+    <em> directional derivative</em>
     along the flow of the differential equation's vector field
     $\mathbf{f}=(f(x,y),g(x,y))^T$. That is, $$\dot{p}(x,y) =
     f(x,y)\frac{\partial p(x,y)}{\partial x} + g(x,y)\frac{\partial
@@ -60,83 +69,63 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     equation $A\mathbf{v}=\lambda\mathbf{v}$ then we recover the above equation
     by exchanging $A\rightarrow \frac{\mathrm{d}}{\mathrm{d} t}$,
     $\mathbf{v}\rightarrow p(x, y)$ and $\lambda\rightarrow a(x,y)$. In other
-    words, taking a time derivative is equivalent to multiplying by a
-    scalar constant. And don't forget that this time derivative operator is really a
-    directional derivative along the direction of the differential equation.
+    words, differentiation of $p(x,y)$ is equivalent to multiplicationg of a
+    scalar function. 
     <br>
     <br>
     Darboux Polynomials also go by the name <em>second integrals</em>
     (or
-    <em>weak integrals</em>). In contrast, a <em>first integral</em> (or
-    <em>strong integral</em>), as we have seen in the section
-    "Energy-preserving methods for differential equations", is a
-    function
-    $H(x,y)$ that is left constant along the solution of the
-    differential
-    equation, that is, $\dot{H}(x, y)=0$. Darboux polynomials are
-    constant
-    along solutions of the differential equation from initial conditions
-    that satisfy $p(x_0, y_0)=0$ or $c(x_0, y_0)=0$. That is, from
-    certain
-    initial conditions they behave like first integrals. Due to this,
-    the
-    solution of a differential equation cannot cross regions where
-    $p(x,y)=0$. In other words, these regions act as barriers and
-    partition
-    the solution space into regions that are qualitatively different.
-    This
-    can be seen in the example to follow and the image above.
+    <em>weak integrals</em>). Recall that a <em>first integral</em> (or
+    <em>strong integral</em>) is a function $H(x,y)$ that is left
+    constant/invariant along the solution of the differential equation, that is,
+    $\dot{H}(x, y)=0$. In constast, Darboux polynomials are only constant along
+    solutions of the differential equation from initial conditions that satisfy
+    $p(x_0, y_0)=0$. That is, from certain initial conditions they behave like
+    first integrals. Due to this, the solution of a differential equation cannot
+    cross regions where $p(x,y)=0$. In other words, these regions act as
+    barriers and partition the solution space into regions that are
+    qualitatively different. For example, say that we have a predator-prey
+    system that models the population of two competing species in an
+    environment. Then we necessarily require that both values remain positive as
+    you can't have a negative number of a species, and if one value becomes
+    zero, then it must stay zero as a species cannot come from nothing. See if
+    you can observe this behaviour in the animations on this page. 
     <br><br>
-    An interesting property about Darboux polynomials is that products
-    of
-    Darboux polynomials are also Darboux polynomials. That is if we have
-    two
-    Darboux polynomials $p(x,y)$ and $q(x,y)$ of a given differential
-    equation that satisfy $\dot{p}(x,y)=a(x,y)p(x,y)$ and
-    $\dot{q}(x,y)=d(x,y)q(x,y)$, then the product $p(x,y)^\alpha
-    q(x,y)^\beta$ is also a Darboux polynomial with cofactor $\alpha
-    a(x,y)+\beta d(x,y)$. That is,
+    An interesting property about Darboux polynomials is that products of
+    Darboux polynomials are also Darboux polynomials. That is if we have two
+    Darboux polynomials $p(x,y)$ and $q(x,y)$ of a given differential equation
+    that satisfy $\dot{p}(x,y)=a(x,y)p(x,y)$ and $\dot{q}(x,y)=b(x,y)q(x,y)$,
+    then the product $p(x,y)^\alpha q(x,y)^\beta$ is also a Darboux polynomial
+    with cofactor $\alpha a(x,y)+\beta b(x,y)$. That is,
     $$\frac{\mathrm{d}}{\mathrm{d}t}\left(p(x,y)^\alpha
-    q(x,y)^\beta\right)=(\alpha a(x,y)+\beta d(x,y))p(x,y)^\alpha
-    q(x,y)^\beta.$$ So in the special case where $\alpha a(x,y)+\beta
-    d(x,y)=0$ then $p(x,y)^\alpha q(x,y)^\beta$ is actually a first
-    integral
-    (AKA invariant, strong integral, preserved quantity). Note that
-    finding
-    Darboux polynomials is a difficult task and there do not exist too
-    many
+    q(x,y)^\beta\right)=(\alpha a(x,y)+\beta b(x,y))p(x,y)^\alpha
+    q(x,y)^\beta.$$ So in the special case where $\alpha a(x,y)+\beta b(x,y)=0$
+    then $p(x,y)^\alpha q(x,y)^\beta$ is actually a first integral (AKA
+    invariant, strong integral, preserved quantity). For example, if there exist two Darboux polynomials, say $p(x,y)$ and $q(x,y)$, with the same cofactor $c(x,y)$ then their ratio is a first integral, that is $$\frac{\mathrm{d}}{\mathrm{d} t}\frac{p(x,y)}{q(x,y)}=0$$ Note that finding Darboux
+    polynomials is a difficult task and there do not exist too many
     computationally tractable methods for doing so.
 </p>
 
 <p style="font-family: Arial">
-    <b>Example: </b>Say we are given the following set of differential
-    equations $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y
-    \left(
-    2\,x+y \right).$$ We have the following three Darboux polynomials
-    $$p(x,y) = x + y, \quad q(x,y) = x - y, \quad r(x,y) = y,$$
-    corresponding to the cofactors $$a(x,y) = x + 5y, \quad b(x,y) = x -
-    y,
-    \quad c(x,y) = 4x+2y,$$ respectively. If we plot $a(x,y)=0$, this is
-    the
-    straight line given by $y=-\frac{x}{5}$ this results in the dashed
-    blue
-    line with negative gradient as shown in the above diagram. The other
-    dashed blue lines correspond to $b(x,y)=0$ and $c(x,y)=0$. Solutions
-    to
-    this differential equation are plotted as black lines. There are
-    multiple black lines corresponding to different initial conditions.
-    We
-    notice that no solution crosses the blue lines, and all the
-    solutions
-    that start on the blue line remain on the blue lines (that is, the
-    Darboux polynomials behave like first integrals when the initial
-    conditions satisfy $a(x_0,y_0)=0$) and so forth. Lastly, we observe
-    that
-    $a(x,y)+3b(x,y)-c(x,y)=0$ meaning that $p(x,y)q(x,y)^3r(x,y)^{-1}$
-    is a
-    first integral. In other words, all the values of $x$ and $y$ that
-    lie
-    on the black lines satisfy $p(x,y)q(x,y)^3r(x,y)^{-1}=constant.$
+<b>Back to the example:</b> If we look back to the differential equaiton we
+presented earlier we see that it possesses the following three Darboux
+polynomials $$p(x,y) = x + y, \quad q(x,y) = x - y, \quad r(x,y) = y,$$
+corresponding to the cofactors $$a(x,y) = x + 5y, \quad b(x,y) = x - y, \quad
+c(x,y) = 4x+2y,$$ respectively. Note $r(x,y) = y$ is the simplest Darboux polynomial to see just by looking at the differential equation.  We can now plot the three lines
+$p(x,y)=q(x,y)=r(x,y)=0$, which gives us the three linear equations $y=x$,
+$y=-x$ and $y=0$. These are plotted as dashed black lines. Finally the
+differential equation's vector field is plotted on top. 
+<br>
+<img src="GIFs/PhaseLines2.gif" alt="phaselines"
+    style="float:center;width:300px;height:300px;">
+<br>
+We notice that no solution crosses the blue lines, and all the solutions that
+start on the dashed black line remain on the blue lines (that is, the Darboux
+polynomials behave like first integrals when the initial conditions satisfy
+$a(x_0,y_0)=0$) and so forth. Lastly, we observe that $a(x,y)+3b(x,y)-c(x,y)=0$
+meaning that $p(x,y)q(x,y)^3r(x,y)^{-1}$ is a first integral. In other words,
+all the values of $x$ and $y$ that lie on the same blue line satisfies
+$p(x,y)q(x,y)^3r(x,y)^{-1}=constant.$
 </p>
 <p style="font-family: Arial">
     <b>Numerical (Runge-Kutta) methods:</b> As most differential
@@ -218,9 +207,12 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     a(\mathbf{x}_0)^\alpha b(\mathbf{x}_0)^\beta\right)
     \left(p(\mathbf{x}_0)^\alpha q(\mathbf{x}_0)^\beta\right).$$
 </p>
+<p style= "font-family: Arial;">
+<b>Results:</b> 
+</p>
 <p
     style="color: black; border:groove; border-width: 6px; font-family: Arial;">
-    <b>Results:</b> So far we know that differential equations can
+    So far we know that differential equations can
     possess
     Darboux polynomials. We know that Darboux polynomials are important
     to
