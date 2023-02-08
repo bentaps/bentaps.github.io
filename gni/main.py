@@ -15,7 +15,7 @@ N_TIMESTEPS = 500
 LIM = 1
 FPS = 20
 DPI = 100
-INITIAL_CONDITION = np.array([[0, 0.45]])
+INITIAL_CONDITION = np.array([[0, 0.5]])
 FILENAME = sys.path[0] + "/GIFs" + "/{gifname}.gif"
 
 METHODS = {"Forward Euler": ode.forward_euler, "Symplectic Euler": ode.symplectic_euler}

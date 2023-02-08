@@ -1,5 +1,5 @@
 import numpy as np
-ALPHA = 2
+ALPHA = 1
 def fx(x, y):
     return ALPHA*y
 
