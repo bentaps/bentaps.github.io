@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.animation import PillowWriter
+import random
 import os
 
 
@@ -16,6 +17,11 @@ def forward_euler(x, f, h):
     return x + h * f(x)
 
 
+def backward_euler_sho(x, f, h):
+    A = np.array([[1, h], [-h, 1]], dtype=np.float32)
+    return np.linalg.inv(A) @ x
+
+
 def symplectic_euler(x, f, h):
     xstep1 = x + h * f(x)
     xstep2 = x + h * f([xstep1[0], x[1]])
@@ -28,6 +34,18 @@ def integrate(phi, x0, f, nt=100, h=0.1):
     for it in range(nt - 1):
         trj[:, it + 1] = phi(trj[:, it], f, h)
     return trj
+
+
+def random_grid(lim, gridpoints, nsols):
+    """returns an nsols by 2 array with random points on taken from a gridpoints by gridpoints grid"""
+    X = np.linspace(-lim, lim, gridpoints)
+    x0, y0 = np.meshgrid(X, X)
+    return np.array(
+        [
+            random.choices(x0.flatten(), k=nsols),
+            random.choices(y0.flatten(), k=nsols),
+        ]
+    ).T
 
 
 def gif(
@@ -72,3 +90,92 @@ def gif(
                     writer.grab_frame()
                 line = l.pop(0)
                 line.remove()
+
+
+def gif_centrifuge(
+    fig,
+    initial_conditions,
+    f,
+    nt,
+    h,
+    integrator,
+    filename,
+    lim=None,
+    frame_res=2,
+    dpi=100,
+    fps=30,
+    writer=PillowWriter(fps=30),
+    marker="",
+    linestyle="b-",
+):
+    """creates a gif of numerical solutions to f"""
+    dir = os.path.dirname(filename)
+    nsol = len(initial_conditions)
+    lines = [None] * nsol
+    print(len(lines))
+    if not os.path.exists(dir):
+        os.makedirs(dir)
+    x = np.empty((2, nt, nsol))
+
+    assert len(integrator) == len(
+        marker
+    ), "Length of intergrator must be equal to length of markers"
+
+    nmeth = len(integrator)
+
+    for i, x0 in enumerate(initial_conditions):
+        x[:, :, i] = integrate(integrator[i % nmeth], x0, f, nt=nt, h=h)
+    with writer.saving(fig, filename, dpi=dpi):
+        for it in range(nt):
+            if it % frame_res == 0:
+                for k in range(nsol):
+                    lines[k] = plt.plot(x[0, it, k], x[1, it, k], marker[k % nmeth])
+                writer.grab_frame()
+
+                [line.pop(0).remove() for line in lines]
+
+
+def gif_particles(
+    fig,
+    filename,
+    X,
+    imeth,
+    dpi=100,
+    writer=None,
+    marker="bo",
+    plane="x-y",
+    fps=30,
+):
+    if writer is None:
+        writer=PillowWriter(fps)
+    PLANES = {
+        "x-y": [0, 1],
+        "y-z": [1, 2],
+        "z-x": [2, 0],
+    }
+    PLANES[plane][0]
+    """creates a gif of numerical solutions to f"""
+    dir = os.path.dirname(filename)
+    nt, _, nm, nparticles = X.shape
+    lines = [None] * nparticles
+
+    plt.xlim(X[:, PLANES[plane][0], :, :].min(), X[:, PLANES[plane][0], :, :].max())
+    plt.ylim(X[:, PLANES[plane][1], :, :].min(), X[:, PLANES[plane][1], :, :].max())
+
+    with writer.saving(fig, filename, dpi=dpi):
+        for it in range(nt):
+            plt.cla()
+            plt.scatter(
+                X[it, PLANES[plane][0], 0, :],
+                X[it, PLANES[plane][1], 0, :],
+                marker="o",
+                alpha=0.3,
+            )  # re
+            plt.scatter(
+                X[it, PLANES[plane][0], imeth, :],
+                X[it, PLANES[plane][1], imeth, :],
+                marker="o",
+                alpha=0.3,
+            )  # ref
+            # plt.scatter(X[it, PLANES[plane][0], imeth, :], X[it, PLANES[plane][1], imeth, :], marker='x')
+            writer.grab_frame()

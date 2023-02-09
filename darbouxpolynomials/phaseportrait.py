@@ -22,14 +22,7 @@ FILENAME = sys.path[0] + "/GIFs" + TEMP + "/{gifname}.gif"
 
 print(FILENAME)
 
-X = np.linspace(-LIM, LIM, 15)
-x0, y0 = np.meshgrid(X, X)
-INITIAL_CONDITIONS = np.array(
-    [
-        random.choices(x0.flatten(), k=NSOLS),
-        random.choices(y0.flatten(), k=NSOLS),
-    ]
-).T
+INITIAL_CONDITIONS = ode.random_grid()
 
 # Create GIF of random trajectories 
 fig = plt.figure()

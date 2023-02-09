@@ -1,10 +1,10 @@
 import numpy as np
 ALPHA = 1
 def fx(x, y):
-    return ALPHA*y
+    return -ALPHA*y
 
 def fy(x, y):
-    return -x
+    return x
 
 def f(x):
     return np.array([fx(x[0], x[1]), fy(x[0], x[1])])

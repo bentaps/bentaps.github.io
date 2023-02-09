@@ -23,32 +23,96 @@
 Scientists and engineers study the collective behaviour of particles immersed in
 turbulent fluid flows. While accurately predicting the trajectories of a single
 particle is not of interest, predicting meaningful statistics from suspensions
-of tens of thousands of particles is far more useful, such as when and where
-particles will cluster given the fluid field. There have been many theoretical
-endeavours to predict such clustering phenomena, and these are all based on a
-physical conservation laws, such as the conservation of mass in the fluid field.
-One such clustering phenomena is called the centrifuge effect. This is the
-tendency for particles that are denser that the fluid to be spun outward when
-the fluid is rotating. Conversely, lighter particles will concentrate in the
-centre of a fluid vortex. The centrifuge effect is derived with the assumption
-that the surrounding fluid field obeys the law of conservation of mass (i.e., it
-has zero divergence). The issue is that this assumption is broken when
-conventional numerical methods are used to simulate particles meaning that the
-main phenomena responsible for particle clustering is overshadowed by numerical
-errors. In other words, instead of particles clustering where the laws of
-physics tell them to, they instead cluster where the numerical errors are
-located.  One of the ideas in this study is therefore to keep this mass
-conservation law true (as well as other properties of the equations) throughout
-the numerical simulation in the hope that it will derive more physically
-meaningful results. Recall that conventional numerical methods that are often
-used in these simulations are designed to reduced the error of each individual
-particle. While that is not a bad thing in and of itself, this is not really
-addressing the problem we trying to solve. We want to reproduce the correct
-clustering of particles and therefore need to reproduce the physical mechanisms
-responsible for this.  To this end, the method that we propose is specially
-designed to replicate several physical properties of the equations of motion for
-the particle suspension. In particular it: (1) preserves the mass conservation
-law of the fluid field; (2) reproduces the centrifuge effect in the same way the
+of thousands or millions of particles is far more useful, such as when and where
+particles will cluster given the fluid field. Such applications include, for
+example, tracking microplastics or tiny particles in the ocean such as plankton,
+predicting ice cloud dynamics or the spread of pollutants in the atmosphere or
+even simulating the spread of waterdroplets in ventilation systems.
+<div style="text-align: center;">
+    <img src="images/microplastics.jpg" alt="fe"
+        style="float:center;width:400px;height:200px;">
+    <!-- <img src="images/plankton.jpg" 
+        style="float:center;width:400px;height:200px;"> -->
+    <img src="images/cloud.jpg"
+        style="float:center;width:400px;height:200px;">
+    <img src="images/sneeze.gif"
+        style="float:center;width:400px;height:200px;">
+</div>
+
+
+There have been numerous theoretical endeavours to predict such clustering
+phenomena, and these are all based on a physical laws, such as the
+conservation of mass in the fluid field. One such clustering phenomena is called
+the <em>centrifuge effect</em>. This is the tendency for particles that are denser that
+the fluid to be spun outward when the fluid is rotating. Conversely, lighter
+particles will concentrate in the centre of a fluid vortex. 
+<div style="text-align: center;">
+    <img src="GIFs/Centrifuge effect.gif" alt="fe"
+        style="float:center;width:400px;height:400px;">
+</div>
+The centrifuge effect is derived with the assumption that the surrounding fluid field obeys the
+law of conservation of mass (i.e., it has zero divergence). The issue is that
+this assumption is broken when conventional numerical methods are used to
+simulate particles meaning that the main phenomena responsible for particle
+clustering is overshadowed by numerical errors. In other words, instead of
+particles clustering where the laws of physics tell them to, they instead
+cluster based on the simulation errors. One of the ideas in this study is
+therefore to keep this mass conservation law true (as well as other properties
+of the equations) throughout the numerical simulation in the hope that it will
+derive more physically meaningful results.
+<br>
+<br>
+Recall that conventional numerical methods that are often used in these
+simulations are designed to reduced the error of each individual particle. While
+that is not a bad thing in and of itself, this is not really addressing the
+problem we trying to solve. We want to reproduce the correct clustering of
+particles and therefore need to reproduce the physical mechanisms responsible
+for this.  To this end, the method that we propose is specially designed to
+replicate several physical properties of the equations of motion for the
+particle suspension. In particular it: (1) preserves the mass conservation law
+of the fluid field; (2) reproduces the centrifuge effect in the same way the
 exact solution dictates; and (3) preserves the exact dissipation of the volume
 in the solution space. If you would like to read more, take a look at the main
 paper.
+<div style="text-align: center;">
+<figure>
+    <img src="SavedGIFs/Geometric method O2 2 y-z.gif"
+         alt="Geometric method (Red). Exact solution (Blue)"
+         style="float:center;width:400px;height:400px;">
+    <img src="SavedGIFs/Standard method O2 2 y-z.gif"
+         alt="Standard method (Red). Exact solution (Blue)"
+         style="float:center;width:400px;height:400px;">
+    <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
+</figure>
+
+</div>
+
+<!-- <div style="text-align: center;">
+    <figure>
+        <img src="SavedGIFs/Geometric method O1 0 z-x.gif"
+             alt="Geometric method (Red). Exact solution (Blue)"
+             style="float:center;width:400px;height:400px;">
+        <img src="SavedGIFs/Standard method O2 0 z-x.gif"
+             alt="Standard method (Red). Exact solution (Blue)"
+             style="float:center;width:400px;height:400px;">
+        <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
+    </figure>
+    
+    </div> -->
+
+
+    <div style="text-align: center;">
+        <figure>
+            <img src="SavedGIFs/Geometric method O1 1 z-x.gif"
+                 alt="Geometric method (Red). Exact solution (Blue)"
+                 style="float:center;width:400px;height:400px;">
+            <img src="SavedGIFs/Standard method O1 1 z-x.gif"
+                 alt="Standard method (Red). Exact solution (Blue)"
+                 style="float:center;width:400px;height:400px;">
+            <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
+        </figure>
+        
+        </div>
+
+<br>
+The most interesting result in this study is that in some cases even an inexpensive geometric integrator ... 
