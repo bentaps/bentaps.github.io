@@ -22,6 +22,12 @@ def backward_euler_sho(x, f, h):
     return np.linalg.inv(A) @ x
 
 
+def midpoint_sho(x, f, h):
+    Ap = np.array([[1, h / 2], [-h / 2, 1]], dtype=np.float32)
+    Am = np.array([[1, -h / 2], [h / 2, 1]], dtype=np.float32)
+    return np.linalg.inv(Ap) @ Am @ x
+
+
 def symplectic_euler(x, f, h):
     xstep1 = x + h * f(x)
     xstep2 = x + h * f([xstep1[0], x[1]])
@@ -36,7 +42,7 @@ def integrate(phi, x0, f, nt=100, h=0.1):
     return trj
 
 
-def random_grid(lim, gridpoints, nsols):
+def random_grid(lim, nsols, gridpoints=100):
     """returns an nsols by 2 array with random points on taken from a gridpoints by gridpoints grid"""
     X = np.linspace(-lim, lim, gridpoints)
     x0, y0 = np.meshgrid(X, X)
@@ -46,6 +52,13 @@ def random_grid(lim, gridpoints, nsols):
             random.choices(y0.flatten(), k=nsols),
         ]
     ).T
+
+
+def random_circle(radius, nsols, gridpoints=100):
+    """returns an nsols by 2 array with random points within circle of radius R"""
+    polarcoords = random_grid(lim=1, nsols=nsols, gridpoints=gridpoints)
+    theta, r = 2 * np.pi * polarcoords[:, 0], radius*np.sqrt(np.abs(polarcoords[:, 1]))
+    return np.array([r * np.cos(theta), r * np.sin(theta)]).T
 
 
 def gif(
@@ -100,26 +113,26 @@ def gif_centrifuge(
     h,
     integrator,
     filename,
+    colors=None,
     lim=None,
     frame_res=2,
     dpi=100,
     fps=30,
     writer=PillowWriter(fps=30),
-    marker="",
-    linestyle="b-",
+    alpha=0.4,
 ):
     """creates a gif of numerical solutions to f"""
     dir = os.path.dirname(filename)
     nsol = len(initial_conditions)
     lines = [None] * nsol
-    print(len(lines))
     if not os.path.exists(dir):
         os.makedirs(dir)
     x = np.empty((2, nt, nsol))
 
-    assert len(integrator) == len(
-        marker
-    ), "Length of intergrator must be equal to length of markers"
+    if colors is not None:
+        assert len(integrator) == len(
+            colors
+        ), "Length of intergrator must be equal to length of markers"
 
     nmeth = len(integrator)
 
@@ -129,10 +142,13 @@ def gif_centrifuge(
         for it in range(nt):
             if it % frame_res == 0:
                 for k in range(nsol):
-                    lines[k] = plt.plot(x[0, it, k], x[1, it, k], marker[k % nmeth])
+                    lines[k] = plt.plot(
+                        x[0, it, k], x[1, it, k], color=colors[k % nmeth], marker='.', alpha = alpha
+                    )
                 writer.grab_frame()
 
                 [line.pop(0).remove() for line in lines]
+                print(f"frame {it}/{int(nt/frame_res)}")
 
 
 def gif_particles(
@@ -145,37 +161,55 @@ def gif_particles(
     marker="bo",
     plane="x-y",
     fps=30,
+    title="",
+    alpha=0.2,
+    color="r",
 ):
+    """creates a gif of numerical solutions to f"""
     if writer is None:
-        writer=PillowWriter(fps)
+        writer = PillowWriter(fps)
     PLANES = {
         "x-y": [0, 1],
         "y-z": [1, 2],
         "z-x": [2, 0],
     }
     PLANES[plane][0]
-    """creates a gif of numerical solutions to f"""
     dir = os.path.dirname(filename)
     nt, _, nm, nparticles = X.shape
     lines = [None] * nparticles
-
     plt.xlim(X[:, PLANES[plane][0], :, :].min(), X[:, PLANES[plane][0], :, :].max())
     plt.ylim(X[:, PLANES[plane][1], :, :].min(), X[:, PLANES[plane][1], :, :].max())
-
     with writer.saving(fig, filename, dpi=dpi):
         for it in range(nt):
             plt.cla()
             plt.scatter(
                 X[it, PLANES[plane][0], 0, :],
                 X[it, PLANES[plane][1], 0, :],
-                marker="o",
-                alpha=0.3,
+                marker=".",
+                alpha=alpha,
             )  # re
             plt.scatter(
                 X[it, PLANES[plane][0], imeth, :],
                 X[it, PLANES[plane][1], imeth, :],
-                marker="o",
-                alpha=0.3,
+                marker=".",
+                alpha=alpha,
+                color=color,
             )  # ref
             # plt.scatter(X[it, PLANES[plane][0], imeth, :], X[it, PLANES[plane][1], imeth, :], marker='x')
+            plt.title(title)
             writer.grab_frame()
+        [writer.grab_frame() for _ in range(int(3 * fps))]
+
+
+COLORS = {
+    "blue": "#1f77b4",
+    "orange": "#ff7f0e",
+    "green": "#2ca02c",
+    "red": "#d62728",
+    "purple": "#9467bd",
+    "brown": "#8c564b",
+    "pink": "#e377c2",
+    "grey": "#7f7f7f",
+    "yellow": "#bcbd22",
+    "cyan": "#17becf",
+}

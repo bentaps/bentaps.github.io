@@ -10,4 +10,4 @@ def f(x):
     return np.array([fx(x[0], x[1]), fy(x[0], x[1])])
 
 def H(x, y):
-    return x**2 + ALPHA*y**2
+    return (x**2 + ALPHA*y**2)/2

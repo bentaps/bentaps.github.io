@@ -1,5 +1,13 @@
 <!DOCTYPE html>
+
+<style>
+    * {
+        font-family: Arial;
+    }
+</style>
 <html>
+<html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -27,92 +35,108 @@ of thousands or millions of particles is far more useful, such as when and where
 particles will cluster given the fluid field. Such applications include, for
 example, tracking microplastics or tiny particles in the ocean such as plankton,
 predicting ice cloud dynamics or the spread of pollutants in the atmosphere or
-even simulating the spread of waterdroplets in ventilation systems.
+even simulating the spread of water droplets in ventilation systems.
 <div style="text-align: center;">
     <img src="images/microplastics.jpg" alt="fe"
         style="float:center;width:400px;height:200px;">
     <!-- <img src="images/plankton.jpg" 
         style="float:center;width:400px;height:200px;"> -->
-    <img src="images/cloud.jpg"
-        style="float:center;width:400px;height:200px;">
-    <img src="images/sneeze.gif"
-        style="float:center;width:400px;height:200px;">
+    <img src="images/cloud.jpg" style="float:center;width:400px;height:200px;">
+    <img src="images/sneeze.gif" style="float:center;width:400px;height:200px;">
 </div>
 
 
-There have been numerous theoretical endeavours to predict such clustering
+There have been numerous <em>theoretical</em> endeavours to predict such clustering
 phenomena, and these are all based on a physical laws, such as the
 conservation of mass in the fluid field. One such clustering phenomena is called
-the <em>centrifuge effect</em>. This is the tendency for particles that are denser that
+the <em>centrifuge effect</em>. This is the tendency for particles that are
+denser that
 the fluid to be spun outward when the fluid is rotating. Conversely, lighter
-particles will concentrate in the centre of a fluid vortex. 
+particles will concentrate in the centre of a fluid vortex.
 <div style="text-align: center;">
-    <img src="GIFs/Centrifuge effect.gif" alt="fe"
+    <img src="SavedGIFs/Centrifuge effect.gif" alt="fe"
         style="float:center;width:400px;height:400px;">
 </div>
-The centrifuge effect is derived with the assumption that the surrounding fluid field obeys the
-law of conservation of mass (i.e., it has zero divergence). The issue is that
-this assumption is broken when conventional numerical methods are used to
-simulate particles meaning that the main phenomena responsible for particle
-clustering is overshadowed by numerical errors. In other words, instead of
-particles clustering where the laws of physics tell them to, they instead
+The centrifuge effect is derived with the assumption that the surrounding fluid
+field obeys the law of conservation of mass (i.e., it has zero divergence). The
+issue is that this assumption is broken when conventional numerical methods are
+used to simulate particles meaning that the main phenomena responsible for
+particle clustering is overshadowed by numerical errors. In other words, instead
+of particles clustering where the laws of physics tell them to, they instead
 cluster based on the simulation errors. One of the ideas in this study is
-therefore to keep this mass conservation law true (as well as other properties
-of the equations) throughout the numerical simulation in the hope that it will
-derive more physically meaningful results.
+therefore to keep this mass conservation law true (as well as other mathematical
+features of the equations) throughout the numerical simulation in the hope that
+it will produce more physically meaningful results.
 <br>
 <br>
-Recall that conventional numerical methods that are often used in these
+The geometric numerical method that we have designed: (1) preserves the
+mass-conservation law when interpolating the fluid field; (2) reproduces the
+centrifuge effect according to physics driving the model; (3) exploits the exact
+solution of the rigid body equations and linear force terms; (4) preserves the
+sum of the Lyapunov spectrum; (5) preserves the exact phase space volume
+contractivity. Below are some comparisons of the geometric method to a standard
+method that is often used by engineers and scientists to simulate such systems.
+The standard method is a general-purpose method and therefore is unaware of the
+physics driving the model. It therefore: (1) breaks the mass conservation law,
+meaning the particles feel that the fluid field is compressible when it should
+be incompressible; (2) contracts phase space volume at at erroneous rate; (3)
+clusters particles according to numerical errors, not the centrifuge effect.
+Below we see some comparisons of the geometric method with the standard method
+and also the exact solution, i.e., the perfect solution, free from simulation
+errors. 
+<!-- Recall that conventional numerical methods that are often used in these
 simulations are designed to reduced the error of each individual particle. While
 that is not a bad thing in and of itself, this is not really addressing the
 problem we trying to solve. We want to reproduce the correct clustering of
 particles and therefore need to reproduce the physical mechanisms responsible
-for this.  To this end, the method that we propose is specially designed to
+for this. To this end, the method that we propose is specially designed to
 replicate several physical properties of the equations of motion for the
 particle suspension. In particular it: (1) preserves the mass conservation law
 of the fluid field; (2) reproduces the centrifuge effect in the same way the
 exact solution dictates; and (3) preserves the exact dissipation of the volume
 in the solution space. If you would like to read more, take a look at the main
-paper.
+paper. -->
 <div style="text-align: center;">
-<figure>
-    <img src="SavedGIFs/Geometric method O2 2 y-z.gif"
-         alt="Geometric method (Red). Exact solution (Blue)"
-         style="float:center;width:400px;height:400px;">
-    <img src="SavedGIFs/Standard method O2 2 y-z.gif"
-         alt="Standard method (Red). Exact solution (Blue)"
-         style="float:center;width:400px;height:400px;">
-    <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
-</figure>
-
-</div>
-
-<!-- <div style="text-align: center;">
     <figure>
-        <img src="SavedGIFs/Geometric method O1 0 z-x.gif"
-             alt="Geometric method (Red). Exact solution (Blue)"
-             style="float:center;width:400px;height:400px;">
-        <img src="SavedGIFs/Standard method O2 0 z-x.gif"
-             alt="Standard method (Red). Exact solution (Blue)"
-             style="float:center;width:400px;height:400px;">
-        <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
+        <img src="SavedGIFs/Geometric method O2 2 y-z.gif"
+            alt="Geometric method (Red). Exact solution (Blue)"
+            style="float:center;width:400px;height:400px;">
+        <img src="SavedGIFs/Standard method O2 2 y-z.gif"
+            alt="Standard method (Red). Exact solution (Blue)"
+            style="float:center;width:400px;height:400px;">
+        <figcaption>Geometric method (purple, left), standard method (orange, right), exact solution (blue, both).</figcaption>
     </figure>
-    
-    </div> -->
-
-
+</div>
+<br>
+<br>
+We see that the geometric method does a much better job at reproducing a
+distribution of particles similar to the exact solution (as there is a lot more
+overlap between purple and blue dots as opposed to the orange dots). What about
+if we compare a computationally inexpensive geometric method with a
+computationally expensive standard method that is more accurate in the
+"conventional sense"? 
     <div style="text-align: center;">
         <figure>
             <img src="SavedGIFs/Geometric method O1 1 z-x.gif"
-                 alt="Geometric method (Red). Exact solution (Blue)"
-                 style="float:center;width:400px;height:400px;">
-            <img src="SavedGIFs/Standard method O1 1 z-x.gif"
-                 alt="Standard method (Red). Exact solution (Blue)"
-                 style="float:center;width:400px;height:400px;">
-            <figcaption>Standard method (Red). Exact solution (Blue)</figcaption>
+            alt="Geometric method (purple, left), standard method (orange, right), exact solution (blue, both)."
+            style="float:center;width:400px;height:400px;">
+            <img src="SavedGIFs/Standard method O2 1 z-x.gif"
+                alt="A faster geometric method (purple, left), a slower standard method (orange, right), exact solution (blue, both)."
+                style="float:center;width:400px;height:400px;">
+            <figcaption>A more efficient geometric method (purple, left), an
+            inefficient standard method (orange, right), exact solution (blue,
+            both).</figcaption>
         </figure>
-        
-        </div>
+    
+    </div>
 
 <br>
-The most interesting result in this study is that in some cases even an inexpensive geometric integrator ... 
+In both of the above simulations, you can see that the standard method clusters
+particles in the wrong regions, whereas the geometric method more accurately
+clusters the particles. This is most obvious by looking at the regions with a
+mismatch of blue and orange dots. However, <b>the most interesting result in this study
+is that in many cases a relatively inexpensive geometric integrator can produce
+particle distributions that are more similar to the exact distribution, even if
+their average error per particle is greater than an inefficient higher-order
+standard method. </b> This strongly supports the use of specially designed
+geometric numerical methods for your problem!

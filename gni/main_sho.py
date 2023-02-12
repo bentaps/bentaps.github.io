@@ -9,9 +9,9 @@ from matplotlib.animation import PillowWriter
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 import odeutils as ode
 
-font = {'size'   : 22}
+font = {"size": 22}
 
-plt.rc('font', **font)
+plt.rc("font", **font)
 
 STEPSIZE = 0.05
 N_TIMESTEPS = 350
@@ -21,21 +21,27 @@ DPI = 100
 INITIAL_CONDITION = np.array([[0, 0.5]])
 FILENAME = sys.path[0] + "/GIFs" + "/{gifname}.gif"
 
-METHODS = {"Standard method": ode.forward_euler, "Geometric method": ode.symplectic_euler}
+METHODS = {
+    "Standard method": ode.forward_euler,
+    "Geometric method": ode.midpoint_sho,
+}
 
 x = np.linspace(-LIM, LIM, 50, endpoint=True)
 mesh = np.meshgrid(x, x)
 writer = PillowWriter(fps=FPS)
 
 
-def initialise_figure(title=""):
+def initialise_figure(title="", contour=False):
     fig = plt.figure()
     plt.xlim([-LIM, LIM])
     plt.ylim([-LIM, LIM])
     plt.title(title)
     ode.quiver(fx, fy, lim=LIM)
-    plt.contour(*mesh, H(*mesh))
+    if contour:
+        cs = plt.contour(*mesh, H(*mesh))
+        plt.clabel(cs, inline=1, fontsize=10)
     return fig
+
 
 
 gif_params = dict(
@@ -51,6 +57,12 @@ gif_params = dict(
 )
 
 if __name__ == "__main__":
+
+    fig = initialise_figure(title="Vector field")
+    plt.savefig("vector_field.png", dpi="figure", format="png")
+    
+    fig = initialise_figure(title="Conservation of energy", contour=True)
+    plt.savefig("energy.png", dpi="figure", format="png")
     for name, integrator in METHODS.items():
         ode.gif(
             integrator=integrator,

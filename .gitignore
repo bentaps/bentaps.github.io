@@ -2,3 +2,6 @@
 particles/data*
 particles/GIFs*
 *venv*
+*_OLD*
+*_old*
+*.DS_Store*

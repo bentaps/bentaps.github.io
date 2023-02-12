@@ -13,15 +13,15 @@ font = {"size": 22}
 
 plt.rc("font", **font)
 
-STEPSIZE = 0.05
-N_TIMESTEPS = 900
+STEPSIZE = 0.075
+N_TIMESTEPS = 500
 LIM = 1
 FPS = 20
 DPI = 100
-NSOLS = 300
-INITIAL_CONDITION = ode.random_grid(lim=0.75, gridpoints=100, nsols=NSOLS)
+NSOLS = 1000
+INITIAL_CONDITION = ode.random_circle(radius=0.7, nsols=NSOLS)
 FILENAME = sys.path[0] + "/GIFs" + "/{gifname}.gif"
-
+print(INITIAL_CONDITION.shape)
 METHODS = {
     "Heavy particles": ode.forward_euler,
     "Light particles": ode.backward_euler_sho,
@@ -57,7 +57,7 @@ gif_params = dict(
 if __name__ == "__main__":
     ode.gif_centrifuge(
         integrator=[ode.forward_euler, ode.backward_euler_sho],
-        marker=["r.", "b."],
+        colors=[ode.COLORS['purple'], ode.COLORS['orange']],
         filename=FILENAME.format(gifname="Centrifuge effect"),
         fig=initialise_figure("Centrifuge effect"),
         **gif_params
