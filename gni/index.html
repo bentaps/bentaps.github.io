@@ -24,7 +24,7 @@
 </head>
 
 <p style="font-family: Arial;">
-    Here is a brief introduction to geometric numerical integration.
+    Here is a brief introduction to geometric numerical integration. 
 </p>
 <details style="padding: 2px 6px;
 background-color: #F5F5DC;
@@ -128,12 +128,12 @@ list-style: none;">
     equation and often bears little resemblance any physical laws that happen to
     govern the dynamics. This is largely due to the fact that the development of
     numerical methods over the past 100 years have been geared towards making
-    them generally applicable. Meaning they can be applied to pretty much any
+    them <b>generally applicable</b>. Meaning they can be applied to pretty much any
     different equation that we need to solve. This is very powerful feature
     because we can almost blindly apply these methods to any problem and get a
     reasonable and consistent approximation to the exact solution. However, this
     generality comes with a cost. Namely, any physical laws that govern the
-    dynamics of the equations under study could be broken. As many differntial
+    dynamics of the equations under study could be broken. As many differential
     equations that are worth solving arise from some sort of physical law,
     standard methods have limited effectiveness when it comes to approximating
     physically consistent solutions. The idea of a <em>geometric</em> numerical
@@ -176,9 +176,14 @@ list-style: none;">
 
 <h2>Example (simple harmonic oscillations):</h2>
 <div style="text-align: center;">
-    <img src="GIFs/spring.gif" alt="fe"
-        style="float:center;width:150px;height:200px;">
-</div>
+        <figure>
+            <img src="GIFs/spring.gif" alt="fe"
+            style="float:center;width:150px;height:200px;">
+            <figcaption style="font-size: 8px;"> (Gif taken from
+                https://quizizz.com/profile/5f85a813680668001b79be4d?section=library)
+            </figcaption>
+        </figure>
+    </div>
 <p style="font-family: Arial;">
     Take an oscillating weight of mass $m$ on a frictionless spring with spring
     constant $k$ in zero gravity (A.K.A. a simple harmonic oscillator). The
@@ -220,7 +225,8 @@ list-style: none;">
             time $t$ on the horizontal axis
             and $x$ and $y$ on the vertical axis. Right: the solutions with $x$
             on the horizontal axis and $y$ on the vertical axis (this is called
-            <em>phase space</em>).
+            <em>phase space</em>). <p style="font-size: 8px;">(Gif taken from
+            https://commons.wikimedia.org/wiki/user:Chetvorno).</p>
         </figcaption>
     </figure>
 </div>
@@ -294,23 +300,23 @@ list-style: none;">
     To summarise, if you have extra knowledge of your differential equation, you
     should exploit it when designing numerical mehtods to get better solutions. 
 </p>
-<!-- 
-<h2> Types of geometric methods. </h2>
 
+<h2> Types of differential equations. </h2>
+Here are some pretty 
 <h3> Equations with multiple invariants</h3>
 <div style="text-align: center;">
     <img src="figs/RalstonRB.png" alt="Ralston"
-        style="float:center;width:400px;height:300px;">
+        style="float:center;width:300px;height:200px;">
     <figcaption> A standard method applied to the rigid body equations.
     </figcaption>
     <img src="figs/KahanRB.png" alt="Kahan"
-        style="float:center;width:400px;height:300px;">
+        style="float:center;width:300px;height:200px;">
     <figcaption> A geometric method that preserves modified invariants.    
     </figcaption>
 </div>
 <h3> Hamiltonian equations</h3>
 <h3> Volume preserving equations</h3>
-<h3> </h3> -->
+<h3> </h3>
 
 
 
