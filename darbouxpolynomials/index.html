@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html>
 
+<!-- <style>
+    * {
+        font-family: Arial;
+    }
+</style> -->
+<html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
@@ -23,36 +30,52 @@
 
 <p style="font-family: Arial;
 font-size: 20 px;">
-    We will first introduce the concept of Darboux polynomials using an example,
-    where we also outline the
-    relevant background information. The results of this research project are
-    presented at the end.
+This page introduces the concept of Darboux polynomials (also known as weak
+integrals, second integrals, eigen functions, algebraic invariant curves, etc.). 
 </p>
+<h2>Example: predator-prey model</h2>
 
 <p style="font-family: Arial">
-    <b>Example: </b>Say we are given the following set of differential equations
-    $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y \left( 2\,x+y
-    \right).$$ Let's examine some qualitative features of this differential
-    equation by looking at some examples of its solution. The following
-    animation plots solutions this differential equation on the starting from
-    random initial conditions (black dots).
+    Consider a set of coupled differential equations for a predator-prey system.
+    Say that $x$ models the population of a prey species (e.g., rabbits), and
+    $y$ models the population of a predator species (e.g., foxes) $$ \dot{x} =
+    {x}(1-y),\quad \dot{y} = y(x-1). $$ We can see here that the population of
+    rabbits will decrease ($\dot{x} < 1$) when there are many foxes eating them
+    ($y>1$), and the population increases ($\dot{x}>1$) when there are few foxes
+    ($y < 1$) hindering their birth rate. Similarly, the fox population will die
+    out ($\dot{y} < 1$) when there are too few rabbits to eat ($x< 1$) and
+    multiply when there is an abundance of rabbits ($x>1$). Let's examine some
+    qualitative features of this differential equation by looking at some
+    examples of its solution. Note that this equation only <em>physically</em>
+    makes sense for positive values of $x$ and $y$ as you can't have negative
+    rabbits or foxes, however we will allow negative values for illustration
+    purposes. The following animation plots solutions this differential equation
+    on the starting from random initial conditions (black dots).
 </p>
 <div style="text-align: center;">
-    <img src="GIFs/PhaseLines.gif" alt="phaselines"
+    <img src="GIFs/PhaseLinesLV.gif" alt="phaselines"
         style="width:300px;height:300px;" class="center" />
 </div>
 <p style="font-family: Arial">
-    We can clearly see here that sometimes the solution is bounded and
-    approaches a certain value. Other times the solution is unbounded and
-    approaches infinity. There are also some regions where the solution doesn't
-    cross (the horizontal axis for example). Furthermore, there are some
-    solutions that are straight lines, i.e., linear functions of time $t$. All
-    of these observations can be explained in terms of <em>Darboux
-    polynomials</em>.
+    We can see a number of things happening here from these solutions:
 </p>
+<ul style="font-family: Arial">
+    <li>Solutions on the left hand side seem to converge to the x-axis.</li>
+    <li>Solutions on the bottom right seem to go off to infinity.</li>
+    <li>Solutions on the top right are bounded, and form closed loops.</li>
+    <li>Solutions never cross the $x$- or $y$-axes, that is if they begin
+        positive (or negative) they stay positive (or negative). </li>
+    <li>Solutions that begin on $x$- or $y$-axes stay on the $x$- or
+        $y$-axes (i.e., if you have 0 rabbits or foxes then they stay 0 as they
+        can't magically appear). </li>
+</ul>
+<p style="font-family: Arial">
+    All of these observations are not a coincidence and can be explained in
+    terms of <em>Darboux polynomials</em>.
+</p>
+<h2>Darboux polynomials: </h2>
 
 <p style="font-family: Arial">
-    <b>Darboux polynomials: </b>
     Say we have a 2-dimensional set of ordinary differential equations for the
     dependent variables $x(t)$ and $y(t)$ $$\dot{x}=f(x, y),\quad \dot{y}= g(x,
     y),$$ where the dot denotes a time derivative $\frac{\mathrm{d}}{\mathrm{d}
@@ -61,11 +84,11 @@ font-size: 20 px;">
     <em>Darboux polynomial</em> $p(x,y)$ if there exists a function $a(x,y)$
     called the <em>cofactor</em> satisfying the following eigenfunction equation
     $$\dot{p}(x,y) = a(x,y)p(x,y).$$ Note here the time derivative is actually a
-    <em> directional derivative</em>
-    along the flow of the differential equation's vector field
-    $\mathbf{f}=(f(x,y),g(x,y))^T$. That is, $$\dot{p}(x,y) =
-    f(x,y)\frac{\partial p(x,y)}{\partial x} + g(x,y)\frac{\partial
-    p(x,y)}{\partial y} = (\mathbf{f}\cdot\nabla)p(x,y).$$
+    <em> directional derivative</em> along the flow of the differential
+    equation's vector field $\mathbf{f}=(f(x,y),g(x,y))^T$, requiring use of the
+    chain rule. <!--That is, $$\dot{p}(x,y) = f(x,y)\frac{\partial
+    p(x,y)}{\partial x} + g(x,y)\frac{\partial p(x,y)}{\partial y} =
+    (\mathbf{f}\cdot\nabla)p(x,y).$$ -->
     <!-- <p
 style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin-right:20px"> -->
     Darboux Polynomials are also called <em>
@@ -96,7 +119,23 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     you can't have a negative number of a species, and if one value becomes
     zero, then it must stay zero as a species cannot come from nothing. See if
     you can observe this behaviour in the animations on this page.
-    <br><br>
+    <br>
+<details style="padding: 2px 6px;
+background-color: #F5F5DC;
+
+border-width: 5px;
+box-shadow: 3px 3px 4px black;
+cursor: nwse-resize;
+list-style: none;">
+    <!-- BUTTON TO EXPAND CONTENT GOES HERE -->
+    <summary style="
+    font-family:Arial;
+    padding: 2;
+    ">
+        Finding first-integrals from Darboux polynomials
+    </summary>
+
+    <!--  CONTENT GOES HERE-->
     An interesting property about Darboux polynomials is that products of
     Darboux polynomials are also Darboux polynomials. That is if we have two
     Darboux polynomials $p(x,y)$ and $q(x,y)$ of a given differential equation
@@ -113,33 +152,83 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     $$\frac{\mathrm{d}}{\mathrm{d} t}\frac{p(x,y)}{q(x,y)}=0$$ Note that finding
     Darboux polynomials is a difficult task and there do not exist too many
     computationally tractable methods for doing so.
+
+</details>
 </p>
 
+<h2>Back to the predator-prey system:</h2>
 <p style="font-family: Arial">
-    <b>Back to the example:</b> If we look back to the differential equaiton we
-    presented earlier we see that it possesses the following three Darboux
-    polynomials $$p(x,y) = x + y, \quad q(x,y) = x - y, \quad r(x,y) = y,$$
-    corresponding to the cofactors $$a(x,y) = x + 5y, \quad b(x,y) = x - y,
-    \quad c(x,y) = 4x+2y,$$ respectively. Note $r(x,y) = y$ is the simplest
-    Darboux polynomial to see just by looking at the differential equation. We
-    can now plot the three lines $p(x,y)=q(x,y)=r(x,y)=0$, which gives us the
-    three linear equations $y=x$, $y=-x$ and $y=0$. These are plotted as dashed
-    black lines. Finally the differential equation's vector field is plotted on
-    top.
+    If we look back to the differential equation we presented earlier we see
+    that it possesses the following two Darboux polynomials $$p(x,y) = x, \quad
+    q(x,y) = y$$ corresponding to the cofactors $$a(x,y) = 1-y, \quad b(x,y) = x
+    - 1,$$ respectively. We can now plot the two lines $p(x,y)=0,\quad
+    q(x,y)=0$, which corresponds to $x=0$ and $y=0$. In the following animation,
+    these are plotted as dashed black lines. Finally the differential equation's
+    vector field is plotted on top.
 <div style="text-align: center;">
-    <img src="GIFs/PhaseLines2.gif" alt="phaselines"
+    <img src="GIFs/PhaseLines2LV.gif" alt="phaselines"
         style="width:300px;height:300px;" class="center" />
 </div>
 <p style="font-family: Arial">
-    We notice that no solution crosses the blue lines, and all the solutions
-    that start on the dashed black line remain on the blue lines (that is, the
-    Darboux polynomials behave like first integrals when the initial conditions
-    satisfy $a(x_0,y_0)=0$) and so forth. Lastly, we observe that
-    $a(x,y)+3b(x,y)-c(x,y)=0$ meaning that $p(x,y)q(x,y)^3r(x,y)^{-1}$ is a
-    first integral. In other words, all the values of $x$ and $y$ that lie on
-    the same blue line satisfies $p(x,y)q(x,y)^3r(x,y)^{-1}=constant.$
+    Again, we notice that no solution crosses the dashed black lines, and all
+    the solutions that start on the dashed black line remain on that line (that
+    is, the Darboux polynomials behave like first integrals when the initial
+    conditions satisfy $p(x_0,y_0)=0$) and so forth.
 </p>
+
+
+<h2>Super fun game: Can you see the Darboux polynomials?</h2>
 <p style="font-family: Arial">
+    Here is a differential equation with three Darboux polynomials
+    $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y \left( 2\,x+y
+    \right).$$ There is one Darboux polynomial that can be seen from the above
+    equation, and the other two can be seen by looking at the below animation.
+</p>
+<div style="text-align: center;">
+    <img src="GIFs/PhaseLines.gif" alt="phaselines"
+        style="width:300px;height:300px;" class="center" />
+</div>
+
+<details style="padding: 2px 6px;
+background-color: #F5F5DC;
+
+border-width: 5px;
+box-shadow: 3px 3px 4px black;
+cursor: nwse-resize;
+list-style: none;">
+    <!-- BUTTON TO EXPAND CONTENT GOES HERE -->
+    <summary style="
+    font-family:Arial;
+    padding: 2;
+    ">
+        Click here to see the the answer
+    </summary>
+
+    <!--  CONTENT GOES HERE-->
+    <p style="font-family: Arial">
+        The following are the three Darboux polynomials: $$p(x,y) = x + y, \quad
+        q(x,y) = x - y, \quad r(x,y) = y,$$ corresponding to the cofactors
+        $$a(x,y) = x + 5y, \quad b(x,y) = x - y, \quad c(x,y) = 4x+2y,$$
+        respectively. Note $r(x,y) = y$ is the simplest Darboux polynomial to
+        see just by looking at the differential equation. We can now plot the
+        three lines $p(x,y)=q(x,y)=r(x,y)=0$, which gives us the three linear
+        equations $y=x$, $y=-x$ and $y=0$. These are plotted as dashed black
+        lines. Finally the differential equation's vector field is plotted on
+        top.
+    <div style="text-align: center;">
+        <img src="GIFs/PhaseLines2.gif" alt="phaselines"
+            style="width:300px;height:300px;" class="center" />
+    </div>
+    <p style="font-family: Arial">
+        We notice that no solution crosses the dashed black lines, and all the
+        solutions that start on the dashed black line remain on that line (that
+        is, the Darboux polynomials behave like first integrals when the initial
+        conditions satisfy $p(x_0,y_0)=0$) and so forth.
+
+</details>
+
+
+<!-- <p style="font-family: Arial">
     <b>Numerical (Runge-Kutta) methods:</b> As most differential equations are
     impossible to solve by hand we often seek to approximate them on a computer.
     One of the most popular classes of numerical methods for solving
@@ -159,12 +248,13 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     approximation to the exact solution $\mathbf{x}(\Delta t)$ by any
     Runge-Kutta method. But we can keep the aforementioned, simple example of
     the Forward Euler method in our minds.
-</p>
+</p> -->
+<h2><em>Discrete</em> Darboux polynomials</h2>
 <p style="font-family: Arial">
-    <b><em>Discrete</em> Darboux polynomials</b> The theory of discrete Darboux
-    polynomials was only recently developed. The idea is to take the
-    eigenfunction equation and discretise the time derivative like so
-    $$\frac{\mathrm{d}p(\mathbf{x})}{\mathrm{d}t} = c(\mathbf{x}) p(\mathbf{x})
+    The theory of discrete Darboux polynomials was only recently developed. The
+    idea is to take the eigenfunction equation and discretise the time
+    derivative like so $$\frac{\mathrm{d}p(\mathbf{x})}{\mathrm{d}t} =
+    c(\mathbf{x}) p(\mathbf{x})
     \underset{\mathrm{(discretise)}}{\longrightarrow} \frac{p(\mathbf{x}_{\Delta
     t}) - p(\mathbf{x}_0)}{\Delta t}\approx c(\mathbf{x}_0)p(\mathbf{x}_0)$$
     Rearranging the equation gives $$p(\mathbf{x}_{\Delta
@@ -180,6 +270,23 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     discrete cofactor $c_{\Delta t}(\mathbf{x}_0)$ that satisfies the above
     discrete eigenfunction equation.
     <br><br>
+<details style="padding: 2px 6px;
+background-color: #F5F5DC;
+
+border-width: 5px;
+box-shadow: 3px 3px 4px black;
+cursor: nwse-resize;
+list-style: none;">
+    <!-- BUTTON TO EXPAND CONTENT GOES HERE -->
+    <summary style="
+    font-family:Arial;
+    padding: 2;
+    ">
+        Finding first-integrals from <em>discrete</em> Darboux polynomials
+    </summary>
+
+    <!--  CONTENT GOES HERE-->
+
     We also have a number of discrete analogues of the continuous Darboux
     polynomial properties. For example we have that if $c_{\Delta
     t}(\mathbf{x})=1$ then $p(\mathbf{x})$ is a first integral (i.e.,
@@ -193,31 +300,29 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     q(\mathbf{x}_{\Delta t})^\beta =\left( a(\mathbf{x}_0)^\alpha
     b(\mathbf{x}_0)^\beta\right) \left(p(\mathbf{x}_0)^\alpha
     q(\mathbf{x}_0)^\beta\right).$$
+</details>
 </p>
+<h2>Main results:</h2>
 <p style="font-family: Arial;">
-    <b>Results:</b>
-</p>
-<p style="color: black; border:groove; border-width: 6px; font-family: Arial;">
-    So far we know that differential equations can possess Darboux polynomials.
-    We know that Darboux polynomials are important to understand the solution
-    space of the equation we are solving (recall from the figure that the dashed
-    blue lines represent important features of the solution). We also know that
-    a numerical method can possess discrete Darboux polynomials. So an important
-    question is: if a differential equation has a Darboux polynomial
-    $p(\mathbf{x})$, when will a numerical method $\mathbf{x}_{\Delta x}$ have
-    $p(\mathbf{x})$ as a discrete Darboux polynomial? The answer is, that when
-    $p(\mathbf{x})$ is linear (i.e., a polynomial of no more than degree one)
-    then all numerical methods that are Runge-Kutta methods will share the same
-    discrete Darboux polynomials of the different equation. However, this cannot
-    happen for the case where $p(\mathbf{x})$ is quadratic or higher.
+    In case you still haven't had enough, here are some of the main results of the paper
+    I wrote (up until now has been common knowledge).
+    <br><br>
+    We answer the following. <b>If a differential equation has a Darboux
+    polynomial $p(\mathbf{x})$, will a numerical method have $p(\mathbf{x})$ as
+    a discrete Darboux polynomial?</b><br><br>
+    We proved that when $p(\mathbf{x})$ is linear then all numerical
+    (Runge-Kutta) methods will share the same discrete Darboux polynomials of
+    the different equation. However, no numerical (Runge-Kutta) method can
+    possess the discrete Darboux polynomial $p(\mathbf{x})$ when it is a
+    quadratic (or higher degree) polynomial.
     <br><br>
     A number of interesting and general results about Runge-Kutta methods can be
     inferred from this discovery, the most striking of which is the following.
-    If a differential equation possesses a rational first integral of the form
-    $H(\mathbf{x})=p(\mathbf{x})/q(\mathbf{x})$ that is linear in the numerator
-    and the denominator, then any Runge-Kutta method will also also have
-    $H(\mathbf{x})$ as first integral.
+    <b>If a differential equation possesses a rational first integral of the
+    form $H(\mathbf{x})=p(\mathbf{x})/q(\mathbf{x})$ that is linear in the
+    numerator and the denominator, then <em>any</em> Runge-Kutta method will
+    also also have $H(\mathbf{x})$ as first integral.</b>
     <br><br>
     The fact that we can learn something new about Runge-Kutta methods shows us
-    that discrete Darboux polynomials are a worthwhile topic to study further.
+    that discrete Darboux polynomials are a worthwhile topic to study further!
 </p>

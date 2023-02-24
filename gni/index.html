@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 
-<style>
-    * {
-        font-family: Arial;
-    }
-</style>
+
 <html>
 
 <head>
@@ -27,11 +23,8 @@
         </script>
 </head>
 
-<p>
-    Here is a brief overview of geometric numerical integration. We will
-    introduce this topic assuming close to no background knowledge, starting
-    with differential equations, numerical analysis then geometric numerical
-    analysis.
+<p style="font-family: Arial;">
+    Here is a brief introduction to geometric numerical integration.
 </p>
 <details style="padding: 2px 6px;
 background-color: #F5F5DC;
@@ -49,7 +42,7 @@ list-style: none;">
 
     <!--  CONTENT GOES HERE-->
 
-    <p>
+    <p style="font-family: Arial;">
         <b>Differential equations: </b>Say we have a 2-dimensional set of
         ordinary differential equations for the dependent variables $x(t)$ and
         $y(t)$ $$\dot{x}=f(x, y),\quad \dot{y}= g(x, y),$$ where the dot denotes
@@ -82,7 +75,7 @@ list-style: none;">
     </summary>
 
     <!--  CONTENT GOES HERE-->
-    <p>
+    <p style="font-family: Arial;">
         Most real-world differential equations are not so easily solvable and
         can be highly non-linear and high dimensional. This means we cannot find
         an exact, general solution. However, just because we are not intelligent
@@ -128,7 +121,7 @@ list-style: none;">
         approximation starting from $\mathbf{x}_0$ as we wrote above. </p>
 </details>
 <h1>Geometric numerical analysis</h1>
-<p>
+<p style="font-family: Arial;">
     Say we want to solve a differential equation. The most usual approach would
     be to apply a standard numerical method. Standard methods can be thought of
     as a purely mathematical approximations to the solution of the differential
@@ -186,12 +179,12 @@ list-style: none;">
     <img src="GIFs/spring.gif" alt="fe"
         style="float:center;width:150px;height:200px;">
 </div>
-<p>
+<p style="font-family: Arial;">
     Take an oscillating weight of mass $m$ on a frictionless spring with spring
     constant $k$ in zero gravity (A.K.A. a simple harmonic oscillator). The
     force of a spring is $F=-kx$, where $x$ is the displacement (or amplitude)
     from the spring's resting position. Then Newton's second law of motion is
-    $$m\frac{\mathrm{d}^2x}{\mathrm{d}t^2} y=-kx.$$ For simplicity, let's set
+    $$m\frac{\mathrm{d}^2x}{\mathrm{d}t^2} =-kx.$$ For simplicity, let's set
     $m=k=1$ and call $y=\frac{\mathrm{d}x}{\mathrm{d}t} $ the velocity. The we
     can rearrange the equation to $$\frac{\mathrm{d}x}{\mathrm{d}t} = y, \quad
     \frac{\mathrm{d}y}{\mathrm{d}t} = -x,$$ with initial conditions $$ x(0)=x_0,
@@ -200,7 +193,7 @@ list-style: none;">
     $x_0$ and $y_0$. For example $x_0=1$, $y_0=0$ means that at time $t=0$ we
     drop the mass with amplitude 1 from rest as shown in the below gifs.
 </p>
-<p>
+<p style="font-family: Arial;">
     The simple harmonic oscillator corresponds to the vector field
     $\mathbf{f}=(y,-x)^T$ which is plotted below. (Recall that a
     vector/vector-field is simply a way of assigning a vector to every point on
@@ -210,7 +203,7 @@ list-style: none;">
     <img src="figs/vector_field.png" alt="vector_field"
         style="float:center;width:300px;height:300px;">
 </div>
-<p>
+<p style="font-family: Arial;">
     The solution to the differential equation is a line parametrised by time
     $t$, that travels in the direction of the vector field $\mathbf{f}$ (in
     other words, $\mathbf{f}$ is the tangent vector of the line). By looking at
@@ -231,7 +224,7 @@ list-style: none;">
         </figcaption>
     </figure>
 </div>
-<p>
+<p style="font-family: Arial;">
     Now say that we didn't actually know how to calculate the exact solution.
     The option we have available then is to then approximate the solution using,
     for example, a numerical method. At this point we could apply a standard
@@ -245,7 +238,7 @@ list-style: none;">
     <figcaption> The forward Euler method.
     </figcaption>
 </div>
-<p>
+<p style="font-family: Arial;">
     At first glance this might not seem like such a bad thing, but let's now
     look at the physics behind this differential equation to see what the
     consequence of using a standard method is. One of the physcial laws that
@@ -267,7 +260,7 @@ list-style: none;">
     </figcaption>
 </div>
 <br>
-<p>
+<p style="font-family: Arial;">
     In analogy to contour lines on a map that denote paths of equal height on a
     hill, the above contour lines denote the coordintes $(x,y)$ of constant
     energy. The radius of each ring is defined by the initial conditions and the
@@ -289,7 +282,7 @@ list-style: none;">
         method (the implicit midpoint rule).
     </figcaption>
 </div>
-<p>
+<p style="font-family: Arial;">
     It can be seen (and proven mathematically) that the numerical solution of
     the above geometric method traces out a perfect circle, meaning that the
     energy remains exactly constant. This means that we can trust that our
@@ -301,7 +294,7 @@ list-style: none;">
     To summarise, if you have extra knowledge of your differential equation, you
     should exploit it when designing numerical mehtods to get better solutions. 
 </p>
-
+<!-- 
 <h2> Types of geometric methods. </h2>
 
 <h3> Equations with multiple invariants</h3>
@@ -317,7 +310,7 @@ list-style: none;">
 </div>
 <h3> Hamiltonian equations</h3>
 <h3> Volume preserving equations</h3>
-<h3> </h3>
+<h3> </h3> -->
 
 
 

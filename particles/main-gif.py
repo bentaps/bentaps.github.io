@@ -53,12 +53,13 @@ for i, matfile in enumerate(matfiles):
     cmap = np.random.rand(nparticles) * 256
     metadata = dict(title="Movie", artist="bentaps")
     writer = PillowWriter(fps=15, metadata=metadata)
+    
     fig = plt.figure()
     ax = fig.add_subplot(projection="3d")
     ax.view_init(elev=10., azim=-20)            
     fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
 
-    with writer.saving(fig, f"GIFs/{simname}.gif", 500):
+    with writer.saving(fig, f"GIFs/{simname}.gif", 150):
         for it in range(nt_interp):
             plt.cla()
             # ax = plt.axes(
@@ -72,7 +73,8 @@ for i, matfile in enumerate(matfiles):
                 positions_interp[it, 1, 0, :],
                 positions_interp[it, 2, 0, :],
                 c=cmap,
-                s=5
+                s=5,
+                alpha=0.5
             )
 
             # plt.grid(visible=True, which="major")
@@ -103,6 +105,4 @@ for i, matfile in enumerate(matfiles):
 
 
             writer.grab_frame()
-            # if it == nt_interp-1:
-            #     plt.show()
-            #     input("pause")
+

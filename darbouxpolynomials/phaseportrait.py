@@ -46,6 +46,7 @@ ode.gif(
 
 # Create GIF of random trajectories plus level sets and vector plot 
 gifname = "PhaseLines2"
+X = np.linspace(-LIM,LIM,100)
 with writer.saving(fig, FILENAME.format(gifname=gifname), dpi=DPI):
     [writer.grab_frame() for _ in range(30)]
     plt.plot(X, p_ls(X), "k--", linewidth=3)

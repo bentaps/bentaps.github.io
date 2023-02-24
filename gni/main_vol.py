@@ -1,60 +1,83 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from matplotlib import cm
-from harmonicOscillator import fx, fy, f, H
+from ABCflow import fx, fy, fy, f
 import sys
 import os
-from matplotlib.animation import PillowWriter
+
 
 sys.path.insert(1, os.path.join(sys.path[0], ".."))
 import odeutils as ode
 
-font = {'size'   : 22}
-
-plt.rc('font', **font)
-
-STEPSIZE = 0.05
-N_TIMESTEPS = 350
-LIM = 1
-FPS = 20
-DPI = 100
-INITIAL_CONDITION = np.array([[0, 0.5]])
-FILENAME = sys.path[0] + "/GIFs" + "/{gifname}.gif"
-
-METHODS = {"Standard method": ode.forward_euler, "Geometric method": ode.symplectic_euler}
-
-x = np.linspace(-LIM, LIM, 50, endpoint=True)
-mesh = np.meshgrid(x, x)
-writer = PillowWriter(fps=FPS)
-
-
-def initialise_figure(title=""):
-    fig = plt.figure()
-    plt.xlim([-LIM, LIM])
-    plt.ylim([-LIM, LIM])
-    plt.title(title)
-    ode.quiver(fx, fy, lim=LIM)
-    plt.contour(*mesh, H(*mesh))
-    return fig
-
-
-gif_params = dict(
-    initial_conditions=INITIAL_CONDITION,
-    f=f,
+NSOLS = 1500
+N_TIMESTEPS = 600
+STEPSIZE = 0.2
+FPS = 16
+ALPHA = 0.12
+DPI = 250
+LENGTH = 40
+ZEXTRA = 1.2
+ZASPECT = 1.5
+LINEWIDTH = 0.5
+width=2
+gif_kwargs = dict(
+    filename="./GIFs/ABC_flow_temp.gif",
+    elev_start=0,
+    azim_start=-90,
+    linewidth=LINEWIDTH,
+    # elev_stop=0,
+    # azim_stop=0,
+    color=[
+        ode.COLORS["blue"],
+        ode.COLORS["blue"],
+        ode.COLORS["blue"],
+        'k',
+        ode.COLORS["purple"],
+    ],
+    alpha=ALPHA,
     nt=N_TIMESTEPS,
     h=STEPSIZE,
-    writer=writer,
+    fps=FPS,
     dpi=DPI,
-    marker="ko",
-    linestyle="r-",
-    frame_res=1,
+    animtype="lines",
 )
 
-if __name__ == "__main__":
-    for name, integrator in METHODS.items():
-        ode.gif(
-            integrator=integrator,
-            filename=FILENAME.format(gifname=name),
-            fig=initialise_figure(name),
-            **gif_params
-        )
+np.random.seed(seed=1)
+initial_conditions = ode.rand_cube(
+    NSOLS, width=width, x0=(0, 1.6+LENGTH, 1.6), stretch=(LENGTH*2/width, 1, 1)
+)
+
+
+def get_fig_ax():
+    fig = plt.figure()
+    ax = fig.add_subplot(projection="3d")
+
+    # margins
+    ax.set_xlim(-LENGTH, LENGTH)
+    ax.set_ylim(-LENGTH, LENGTH)
+    ax.set_zlim(-ZASPECT * ZEXTRA * LENGTH, ZASPECT * LENGTH)
+    ax.set_box_aspect((2, 2, 2 * ZASPECT))
+    plt.subplots_adjust(top=1, bottom=0, right=1, left=0, hspace=0, wspace=0)
+    plt.margins(0, 0, 0)
+    plt.axis("off")
+    # ax.set_xticklabels([])
+    # ax.set_yticklabels([])
+    # ax.set_zticklabels([])
+    return fig, ax
+
+
+fig, ax = get_fig_ax()
+
+ode.gif3d_2(
+    ax=ax,
+    f=f,
+    initial_conditions=initial_conditions,
+    integrator=ode.volume_preserving,
+    **gif_kwargs,
+)
+
+plt.axis("on")
+
+plt.show()
+
+# initial_conditions = ode.ring(NSOLS, r=1, x0=(2, 1, 0))
+# initial_conditions = ode.rand_cube(NSOLS, width=0.25, x0=(3, 2, 1))
