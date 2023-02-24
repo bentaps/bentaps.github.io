@@ -22,7 +22,7 @@ FILENAME = sys.path[0] + "/GIFs" + TEMP + "/{gifname}.gif"
 
 print(FILENAME)
 
-INITIAL_CONDITIONS = ode.random_grid(lim=LIM, nsols=NSOLS, gridpoints=12)
+INITIAL_CONDITIONS = ode.random_grid(lim=LIM, nsols=NSOLS, gridpoints=13)
 
 # Create GIF of random trajectories 
 fig = plt.figure()

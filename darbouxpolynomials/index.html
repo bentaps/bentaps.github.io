@@ -31,8 +31,18 @@
 <p style="font-family: Arial;
 font-size: 20 px;">
 This page introduces the concept of Darboux polynomials (also known as weak
-integrals, second integrals, eigen functions, algebraic invariant curves, etc.). 
+integrals, second integrals, eigen functions, algebraic invariant curves, etc.).
+Darboux polynomials are the basis for the main results of this paper (<a
+href="https://arxiv.org/pdf/2105.10929.pdf">open access version</a>). This paper
+gives novel results about Runge-Kutta methods and <em>discrete Darboux polynomials</em>
+(which is a concept introduced in 
+<a href="https://iopscience.iop.org/article/10.1088/1751-8121/ab294b/pdf">this paper</a>
+and <a href="https://www.aimsciences.org/article/doi/10.3934/jcd.2022014">this
+paper</a>). Discrete Darboux polynomials are presented at the end of this page
+along with a summary of the results of the main paper. We will start with an
+intuitive example.
 </p>
+
 <h2>Example: predator-prey model</h2>
 
 <p style="font-family: Arial">
@@ -40,21 +50,22 @@ integrals, second integrals, eigen functions, algebraic invariant curves, etc.).
     Say that $x$ models the population of a prey species (e.g., rabbits), and
     $y$ models the population of a predator species (e.g., foxes) $$ \dot{x} =
     {x}(1-y),\quad \dot{y} = y(x-1). $$ We can see here that the population of
-    rabbits will decrease ($\dot{x} < 1$) when there are many foxes eating them
-    ($y>1$), and the population increases ($\dot{x}>1$) when there are few foxes
-    ($y < 1$) hindering their birth rate. Similarly, the fox population will die
-    out ($\dot{y} < 1$) when there are too few rabbits to eat ($x< 1$) and
-    multiply when there is an abundance of rabbits ($x>1$). Let's examine some
-    qualitative features of this differential equation by looking at some
-    examples of its solution. Note that this equation only <em>physically</em>
-    makes sense for positive values of $x$ and $y$ as you can't have negative
-    rabbits or foxes, however we will allow negative values for illustration
-    purposes. The following animation plots solutions this differential equation
-    on the starting from random initial conditions (black dots).
+    rabbits will decrease (in other words, $\dot{x} < 0$) when there are many
+    foxes eating them ($y>1$), and the population increases ($\dot{x}>0$) when
+    there are few foxes ($y < 1$) hindering their birth rate. Similarly, the fox
+    population will dwindle ($\dot{y} < 0$) when there are too few rabbits to
+    eat ($x< 1$) and will increase ($\dot{y} > 0$) when there is an abundance of
+    rabbits ($x>1$). Let's examine some qualitative features of this
+    differential equation by looking at some examples of its solutions. Note
+    that this equation only <em>physically</em> makes sense for positive values
+    of $x$ and $y$ as you can't have negative rabbits or foxes, however we will
+    allow negative values for illustration purposes. The following animation
+    plots solutions to this differential equation as blue lines  starting from
+    random initial conditions (black dots).
 </p>
 <div style="text-align: center;">
     <img src="GIFs/PhaseLinesLV.gif" alt="phaselines"
-        style="width:300px;height:300px;" class="center" />
+        style="width:400px;height:400px;" class="center" />
 </div>
 <p style="font-family: Arial">
     We can see a number of things happening here from these solutions:
@@ -70,7 +81,7 @@ integrals, second integrals, eigen functions, algebraic invariant curves, etc.).
         can't magically appear). </li>
 </ul>
 <p style="font-family: Arial">
-    All of these observations are not a coincidence and can be explained in
+    All of these observations are no coincidence and can be explained in
     terms of <em>Darboux polynomials</em>.
 </p>
 <h2>Darboux polynomials: </h2>
@@ -117,8 +128,8 @@ style="color: black; border:dotted; font-family: Arial; margin-left:20px; margin
     system that models the population of two competing species in an
     environment. Then we necessarily require that both values remain positive as
     you can't have a negative number of a species, and if one value becomes
-    zero, then it must stay zero as a species cannot come from nothing. See if
-    you can observe this behaviour in the animations on this page.
+    zero, then it must stay zero as a species cannot come from nothing. You
+    should be able to observe this behaviour in the animations on this page.
     <br>
 <details style="padding: 2px 6px;
 background-color: #F5F5DC;
@@ -167,7 +178,7 @@ list-style: none;">
     vector field is plotted on top.
 <div style="text-align: center;">
     <img src="GIFs/PhaseLines2LV.gif" alt="phaselines"
-        style="width:300px;height:300px;" class="center" />
+        style="width:400px;height:400px;" class="center" />
 </div>
 <p style="font-family: Arial">
     Again, we notice that no solution crosses the dashed black lines, and all
@@ -177,7 +188,7 @@ list-style: none;">
 </p>
 
 
-<h2>Super fun game: Can you see the Darboux polynomials?</h2>
+<h2>Super fun game: Can you spot the Darboux polynomials?</h2>
 <p style="font-family: Arial">
     Here is a differential equation with three Darboux polynomials
     $$\dot{x}={x}^{2}+2\,xy+3\,{y}^{2},\quad \dot{y}=2\,y \left( 2\,x+y
@@ -186,7 +197,7 @@ list-style: none;">
 </p>
 <div style="text-align: center;">
     <img src="GIFs/PhaseLines.gif" alt="phaselines"
-        style="width:300px;height:300px;" class="center" />
+        style="width:400px;height:400px;" class="center" />
 </div>
 
 <details style="padding: 2px 6px;

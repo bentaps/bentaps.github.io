@@ -35,7 +35,7 @@ for i, matfile in enumerate(matfiles):
     print("St", data["St"])
 
     simname = data.get("SIMULATIONNAME", f"missing_name-{i}")[0]
-    positions = np.array(data["YY"][:, 10:13, :, 0:4000])
+    positions = np.array(data["YY"][:, 10:13, :, :])
     positions = np.remainder(positions, LENGTH) if LENGTH else positions
     nt, nd, nm, nparticles = positions.shape
     im = 0
@@ -59,7 +59,7 @@ for i, matfile in enumerate(matfiles):
     ax.view_init(elev=10., azim=-20)            
     fig.subplots_adjust(left=0, bottom=0, right=1, top=1, wspace=None, hspace=None)
 
-    with writer.saving(fig, f"GIFs/{simname}.gif", 150):
+    with writer.saving(fig, f"GIFs/{simname}.gif", dpi=80):
         for it in range(nt_interp):
             plt.cla()
             # ax = plt.axes(
@@ -74,7 +74,7 @@ for i, matfile in enumerate(matfiles):
                 positions_interp[it, 2, 0, :],
                 c=cmap,
                 s=5,
-                alpha=0.5
+                alpha=0.1
             )
 
             # plt.grid(visible=True, which="major")

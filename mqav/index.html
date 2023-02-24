@@ -20,6 +20,39 @@
         </script>
 </head>
 
+<h2>Energy preserving methods for differential equations</h2>
+<p style="font-family: Arial">
+    This page summarises the new energy-preserving method proposed in <a
+    href="https://epubs.siam.org/doi/10.1137/21M1442644">this paper</a> (or the
+    <a href="https://arxiv.org/pdf/2108.06548.pdf">open access version</a>)
+    called the <b>multiple quadratic auxiliary method</b>. The numerical method
+    is designed to solve any differential equation with one (or more) polynomial
+    invariant whilst preserving that invariant exactly.
+    It does so by the following:
+    <ul style="font-family: Arial">
+        <li>introduces auxiliary variables to reformulate the equation in a
+            higher-dimensional space with modified quadratic invariants/energy,</li>
+        <li>performs the numerical integration in the higher-dimensional space
+        whilst preserving all the modified quadratic invariants/energy,</li>
+        <li>projects exactly back onto the original space yielding a method that preserves
+        the original invariants.</li>
+    </ul>
+</p>
+<p style="font-family: Arial">
+    The method is cool because:
+    <ul style="font-family: Arial">
+        <li>it is surprisingly simple (relative to other geometric methods),</li>
+        <li>it is a new type of <em>discrete gradient,
+        method</em></li>
+        <li>It generalises the <em>averaged vector field method</em> for polynomial Hamiltonians.</li>
+    </ul>
+</p>
+<p style="font-family: Arial">
+    The rest of this page gives an example of the method applied to a simple 2-D
+    mass-spring differential equation with a quartic potential (quartic
+    oscillator).
+</p>
+
 <h2>The quartic oscillator</h2>
 <p style="font-family: Arial">
     Say that we have a unit mass $(m=1)$ on a spring with whose force is
@@ -29,16 +62,17 @@
     following set of differential equations (Newton's second law of motion)
     $$\dot{x}_1=-x_2^3,\quad\dot{x}_2=x_1.$$ We want to create a numerical
     approximation to the solution of this differential equation. However, we
-    know that the total energy is preserved along this solution so let's also
-    create a geometric numerical method that is also energy-preserving. 
+    know that the total energy is preserved along this solution ($\dot{E}(x_1,
+    x_2)=0$) so let's also create a geometric numerical method that is also
+    energy-preserving. 
 </p>
-<h2>The implicit midpoint method</h2>
+<h2>The implicit midpoint method (not energy-preserving)</h2>
 <p style="font-family: Arial">
     Given a differential equation in vector notation
     $\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x})$ then the implicit midpoint method
     is the given by the following $$\frac{\mathbf{x}'-\mathbf{x}}{h} =
     \mathbf{f}\left(\frac{\mathbf{x}'+\mathbf{x}}{2}\right),$$ where $h<< 1$ is
-    a small finite timestep, $\mathbf{x}'\approx\mathbf{x}(h)$ is the numerical
+    a small finite time step, $\mathbf{x}'\approx\mathbf{x}(h)$ is the numerical
     approximation to the exact solution of the differential equation at time $h$
     starting from initial conditions $\mathbf{x}=\mathbf{x}(0)$. Solving this
     set of equations for the the vector $\mathbf{x}'$ gives the midpoint method.
@@ -46,7 +80,7 @@
     yields the following algebraic equations $$\begin{align}\frac{x_1'-x_1}{h} =&
     -\left(\frac{x_2'+x_2}{2}\right)^3,\\ \frac{x_2'-x_2}{h} =&
     \frac{x_1'+x_1}{2}.\end{align}$$ Solving the above for $x_1'$ and $x_2'$ gives the the
-    midpoint method solution to teh quartic oscillator at time $h$. However we
+    midpoint method solution to the quartic oscillator at time $h$. However we
     will find that this solution is not energy preserving, meaning
     $E(x_1',x_2')\ne E(x_1,x_2)$. 
     <br><br>
@@ -60,26 +94,27 @@
     <br><br>
 </p>
 
-<h2>Solving the quartic oscillator using multiple quadratic variables. </h2>
+<h2>Solving the quartic oscillator using quadratic auxiliary variables
+(energy-preserving!) </h2>
 <p style="font-family: Arial">
 The whole idea behind this method is to introduce an auxiliary variable
 $y_{2,2}$ to convert the quartic energy into a <em>quadratic</em> one, then
 apply the midpoint rule to yield an energy preserving method on this higher
 dimensional space. Let's define the new variable $$y_{2,2}=x_2^2.$$ Then we can
 write our energy as $$E(x_1,x_2,y_{2,2})=\frac{1}{2}x_1^2 + \frac{1}{4}
-y_{2,2}^2, $$ which is now a quadratic energy. The time derivative of $y_{2,2}$
-is given by the chain rule $\dot{y}_{2,2} = 2x_2\dot{x}_2 =2x_2x_1$. Knowing
-this, we can now reformulate the original differential equation as an equivalent
-set of now three differential differential equations $$\begin{aligned}\label{h1}
-\dot{x}_1 = & -x_2y_{2,2},\\ \dot{x}_2 = & x_1,\\ \dot{y}_{2,2} = & 2x_1x_2,\\
-\end{aligned}$$ What we have done is reformulated the original differential
-equation, which was two dimensional with one quartic invariant, into one that is
-three dimensional with two <em>quadratic invariants</em> (the second invariant
-being $H(x_2,y_{2,2})=y_{2,2}-x_2^2$, this is just saying that
-$y_{2,2}(t)=x_2(t)$ for all time $t$). So to get an energy-preserving method, we
-just have to apply the midpoint rule. This gives $$\begin{aligned}\label{mp1}
-\frac{x_1'-x_1}{h} = &
--\left(\frac{x_2'+x_2}{2}\right)\left(\frac{y_{2,2}'+y_{2,2}}{2}\right),\\
+y_{2,2}^2, $$ which is now a quadratic energy in the new variables $(x_1, x_2,
+y_{2,2})$. The time derivative of $y_{2,2}$ is given by the chain rule
+$\dot{y}_{2,2} = 2x_2\dot{x}_2 =2x_2x_1$. Knowing this, we can now reformulate
+the original differential equation as an equivalent set of now three
+differential equations $$\begin{aligned}\label{h1} \dot{x}_1 = & -x_2y_{2,2},\\
+\dot{x}_2 = & x_1,\\ \dot{y}_{2,2} = & 2x_1x_2.\\ \end{aligned}$$ What we have
+done is reformulated the original differential equation, which was two
+dimensional with one quartic invariant, into one that is three dimensional with
+two <em>quadratic invariants</em> (the second invariant being
+$H(x_2,y_{2,2})=y_{2,2}-x_2^2$, this is just saying that $y_{2,2}(t)=x_2(t)^2$
+for all time $t$). So to get an energy-preserving method, we just have to apply
+the midpoint rule. This gives $$\begin{aligned}\label{mp1} \frac{x_1'-x_1}{h} =
+& -\left(\frac{x_2'+x_2}{2}\right)\left(\frac{y_{2,2}'+y_{2,2}}{2}\right),\\
 \frac{x_2'-x_2}{h} = & \left(\frac{x_1'+x_1}{2}\right),\\
 \frac{y_{2,2}'-y_{2,2}}{h} = &
 2\left(\frac{x_1'+x_1}{2}\right)\left(\frac{x_2'+x_2}{2}\right). \end{aligned}$$
@@ -87,26 +122,35 @@ To get the numerical solution we need to solve this set of equations for $x_1'$,
 $x_2'$ <em>and</em> $y_{2,2}'$. It may be a bit unsettling that we now have to
 solve a higher dimensional set of implicit equations, however due to the
 midpoint rule satisfying $H(x_2,y_{2,2})=H(x_2',y_{2,2}')$ this implies that
-$y_{2,2}-x_2^2=y'_{2,2}-x_2'^2$ or simply $y_{2,2}'=x_2'^2$. So we can
-substitute this back into the above set of algebraic equations to get a
-midpoint-like method on the original space: $$\begin{aligned}\label{1rdmp1}
-\frac{x_1'-x_1}{h} = &
+$y_{2,2}-x_2^2=y'_{2,2}-x_2'^2$ or simply $y_{2,2}'=x_2'^2$ because our initial
+conditions satisfy $y_{2,2}=x_2^2$. So we can substitute this back into the
+above set of algebraic equations to get a midpoint-like method on the original
+space: $$\begin{aligned}\label{1rdmp1} \frac{x_1'-x_1}{h} = &
 -\left(\frac{x_2'+x_2}{2}\right)\left(\frac{x_2'^2+x_2^2}{2}\right),\\
 \frac{x_2'-x_2}{h} = & \left(\frac{x_1'+x_1}{2}\right). \end{aligned}$$ More
-importantly, by using this substitution we can show that $x_1'$ and $x_2'$ preserve the quartic energy: $$\frac{1}{2}{x_1}^2 + \frac{1}{4} {x}_{2}^4=E(x_1,x_2,y_{2,2}) =
-E(x_1',x_2',y_{2,2}') = \frac{1}{2}{x_1'}^2 + \frac{1}{4} {y'}_{2,2}^2 = \frac{1}{2}{x_1'}^2 + \frac{1}{4} {x'}_{2}^4.$$
+importantly, by using this substitution we can show that $x_1'$ and $x_2'$
+preserve the quartic energy $$\frac{1}{2}{x_1'}^2 + \frac{1}{4} {x'}_{2}^4=\frac{1}{2}{x_1}^2 + \frac{1}{4}
+{x}_{2}^4.$$
+This is shown in the following figure. 
 <br>
-<br>
-We now summarise what has happened and visualise each step in the below diagram:
+<div style="text-align: center;">
+    <img src="images/phase_quadrics.png" alt="phasediagram"
+        style="float:center;width:600px;height:400px;">
+</div>
+<p style="font-family: Arial">
+We'll now summarise what has happened and visualise each step using the figure:
+</p>
 <ul style="font-family: Arial">
     <li>We start with a 2D differential equation (i.e., whose solution exists in the $x_1$-$x_2$ plane)</li>
     <li>We know that the solution has a quartic invariant (that is, the solution
-    should follow the contour lines of $E$, drawn as thin lines in the
+    should follow the quartic contour lines of $E$, drawn as thin lines in the
     $x_1$-$x_2$ plane)</li>
-    <li>Instead of staying in the $x_1$-$x_2$ plane, we introduce a third dimension, given by the $y_{2,2}$ axis.</li>
+    <li>Instead of solving the equation in the $x_1$-$x_2$ plane (the
+    conventional approach), we introduce a third dimension, given by the
+    $y_{2,2}$ axis.</li>
     <li>Now instead of a quartic contour line that we have to follow in the
     $x_1$-$x_2$ plane, we now have two quadratic hyper surfaces that our
-    solution needs to lie on the intersection of. Note that these two surfaces
+    solution needs to lie on the intersection of. These two surfaces
     correspond to $H(x_2, y_{2,2})$ and $E(x_1, x_2, y_{2,2})$.</li>
     <li>This is easily achieved due to the fact that the midpoint method
     preserves all quadratic invariants. The solution of the midpoint method in
@@ -115,14 +159,27 @@ We now summarise what has happened and visualise each step in the below diagram:
     solution back onto the $x_1$-$x_2$ plane. This projection is given by the
     dashed line. </li>
     <li>The method that generates this dashed line is called the multiple
-    quadratic auxiliary method and preserves the quartic energy. That is, is
-    lies on the thin black contour line of $E(x_1,x_2)$.</li>
+    quadratic auxiliary method and it preserves the quartic energy. That is to
+    say that the dashed line lies on one of the thin black contour line of
+    $E(x_1,x_2)$.</li>
 </ul>
 </p>
+<h2>Multiple invariants</h2>
+<p style="font-family: Arial">
+The multiple quadratic variable method can solve differntial equations and
+preserve multiple invariants simultaneously! The below figures are of a 3D Nambu
+system in the variables $(x_1, x_2, x_3)$ with two invariants of degree 4 and 8.
+On the left is the multiple quadratic auxiliary method, which stays on the
+intersection of the two invariants surfaces (good!) and on the right is a higher
+order Runge-Kutta method, which drifts off the surfaces (bad!). </p>
 
 <div style="text-align: center;">
-    <img src="images/phase_quadrics.png" alt="phasediagram"
-        style="float:center;width:600px;height:400px;">
+    <img src="images/phase_lines_4.png" alt="phasediagram"
+        style="float:center;width:400px;height:300px;">
+    <img src="images/phase_lines_1.png" alt="phasediagram2"
+        style="float:center;width:400px;height:300px;">
+</div>
+<div style="text-align: center;">
 </div>
 
 <!-- 
