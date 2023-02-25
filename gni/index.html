@@ -49,10 +49,10 @@ list-style: none;">
         a time derivative $\frac{\mathrm{d}}{\mathrm{d} t}$ and $x=x(t)$ and
         $y=y(t)$ are functions of $t$ but we just write $x$ and $y$ for brevity
         as we will do throughout. We often write this in the following
-        <em>vector notation</em>: $$\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x}),$$
-        where $\mathbf{f}(\mathbf{x})=(f(x,y),g(x,y))^T$ is called the
+        <em>vector notation</em>: $$\dot{\mathbf{x}}=\mathbf{f}(\mathbf{x}(t)),$$
+        where $\mathbf{f}(\mathbf{x}(t))=(f(x,y),g(x,y))^T$ is called the
         <em>vector field</em> of the differential equation and
-        $\mathbf{x}=(x,y)^T$ is the vector of independent variables. (Note we
+        $\mathbf{x}(t)=(x,y)^T$ is the vector of independent variables. (Note we
         write vectors with the transpose operator $^T$ as it is convention that
         vectors are column-vectors). The goal of solving differential equations
         is therefore to solve for the dependent variables $\mathbf{x}$ given the
@@ -83,26 +83,26 @@ list-style: none;">
         long as the solution exists then by using <em>numerical methods</em> we
         can approximate it to an arbitrarily high level of accuracy.
         <br><br>
-        Let's now solve the above simple harmonic oscillator using a numerical
-        method. The idea behind numerical methods is as follows. Using the
-        initial conditions and vector field, approximate the solution at some
-        small time step $\Delta t << 1$ in the future. The simplest
+        The idea behind numerical methods is as follows. Using the initial
+        conditions at $\mathbf{x}(0)$ at time $t=0$ and the vector field
+        $\mathbf{f}{\mathbf{x}(0)}$, approximate the solution at some small time
+        step $\Delta t << 1$ in the future. The simplest
         approximation/discretisation we can make is
-        $$\frac{\mathrm{d}\mathbf{x}(t)}{\mathrm{d}t} =
-        \mathbf{f}(\mathbf{x}(t)) \quad
+        $$\frac{\mathrm{d}\mathbf{x}(0)}{\mathrm{d}t} =
+        \mathbf{f}(\mathbf{x}(0)) \quad
         \underset{\mathrm{(discretise)}}{\longrightarrow} \quad
         \frac{\mathbf{x}(\Delta t) - \mathbf{x}(0)}{\Delta t} \approx
         \mathbf{f}(\mathbf{x}(0))$$ Recall that the definition of the derivative
-        is $\frac{\mathrm{d}\mathbf{x}(t)} {\mathrm{d}t} :=\lim_{\Delta
+        at $t=0$ is $\frac{\mathrm{d}\mathbf{x}(0)} {\mathrm{d}t} :=\lim_{\Delta
         t\rightarrow 0}\frac{\mathbf{x}(\Delta t) - \mathbf{x}(0)}{\Delta t}$,
         so the approximation is the same as this but assuming that $\Delta t <<
         1$ is a finite small number instead of taking the limit all the way to
         zero $\Delta t \rightarrow 0$. So the above discretisation is
-        interpreted as the approximate derivative is roughly equal to the the
-        vector field evaluated at $t=0$ (actually we could have chosen any value
-        $0\le t \le \Delta t$ but $t=0$ is the simplest). We can now rearrange
-        this equation to get the following $$\mathbf{x}_1=\mathbf{x}_0 + \Delta
-        t \,\mathbf{f}(\mathbf{x}_0),$$ where we are now using the notation
+        interpreted as "the discrete derivative approximates the vector field
+        evaluated at $t=0$" (actually we could have chosen any value $0\le t \le
+        \Delta t$ but $t=0$ is the simplest). We can now rearrange this equation
+        to get the following $$\mathbf{x}_1=\mathbf{x}_0 + \Delta t
+        \,\mathbf{f}(\mathbf{x}_0),$$ where we are now using the notation
         $\mathbf{x}_n\approx \mathbf{x}(n\Delta x)$ (except for $n=0$, where the
         $\approx$ is an $=$ as the initial conditions are by definition exact).
         In other words, using the above discretisation we can calculate an
